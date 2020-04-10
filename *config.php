@@ -1,0 +1,5 @@
+<?php
+
+// DEFINE
+
+$config = 'ok';

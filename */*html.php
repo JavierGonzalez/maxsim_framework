@@ -1,7 +1,8 @@
 <?php
 
+namespace html;
 
-function html_table($data, $config=false) {
+function table($data, $config=false) {
     
     if (!is_array($data))
         return '';
@@ -84,22 +85,22 @@ function html_table($data, $config=false) {
 }
 
 
-function html_a($url, $text, $blank=false) {
+function a($url, $text, $blank=false) {
     return '<a href="'.$url.'"'.($blank?' target="_blank"':'').'>'.$text.'</a>';
 }
 
 
-function html_b($text) {
+function b($text) {
     return '<b>'.$text.'</b>';
 }
 
 
-function html_h($text, $num=1) {
+function h($text, $num=1) {
     return '<h'.$num.'>'.$text.'</h'.$num.'>';
 }
 
 
-function html_button($url=false, $text='', $style='primary', $extra=false) {
+function button($url=false, $text='', $style='primary', $extra=false) {
     if ($url)
         return '<a href="'.$url.'" class="btn btn-'.$style.'">'.$text.'</a>';
     else

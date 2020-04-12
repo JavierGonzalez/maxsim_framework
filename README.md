@@ -1,3 +1,3 @@
-# Maximum Simplicity
+# maxsim
 
-Maximum Simplicity is a sophisticated next-gen PHP framework.
+maxsim (Maximum Simplicity) is a sophisticated next-gen PHP framework.

@@ -2,4 +2,4 @@
 
 // DEFINE
 
-$config = 'ok';
+$maxsim['template']['name'] = 'maxsim';

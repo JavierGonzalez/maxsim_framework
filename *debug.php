@@ -8,7 +8,7 @@ function __($echo='', $scroll_down=false) {
     $hrtime = $maxsim['crono'];
 
     echo '<br />'."\n";
-    echo ++$maxsim['___'].'. &nbsp; '.date('Y-m-d H:i:s').' &nbsp; '.implode(' &nbsp; ', profiler($hrtime)).' &nbsp; ';
+    echo ++$maxsim['debug_count'].'. &nbsp; '.date('Y-m-d H:i:s').' &nbsp; '.implode(' &nbsp; ', profiler($hrtime)).' &nbsp; ';
 
 
     if (is_string($echo))
@@ -20,7 +20,7 @@ function __($echo='', $scroll_down=false) {
     
 
     if ($scroll_down) {
-        if ($maxsim['___']==1) {
+        if ($maxsim['debug_count']==1) {
             if (function_exists('apache_setenv')) {
                 @apache_setenv('no-gzip', 1);
             }
@@ -54,7 +54,7 @@ function profiler($hrtime=false) {
     if (!$hrtime)
         $hrtime = $maxsim['crono'];
 
-    $output[] = number_format((hrtime(true)-$hrtime)/1000/1000,1).' ms';
+    $output[] = number_format((hrtime(true)-$hrtime)/1000/1000,2).' ms';
     
     if (is_numeric($maxsim['sql']['count']))
         $output[] = number_format($maxsim['sql']['count']).' sql';
@@ -62,7 +62,7 @@ function profiler($hrtime=false) {
     if (is_numeric($maxsim['rpc']['count']))
         $output[] = number_format($maxsim['rpc']['count']).' rpc';
 
-    $output[] = number_format(memory_get_usage(false)/1024/1024,2).' mb';
+    $output[] = number_format(memory_get_usage(false)/1024).' kb';
     
     return $output;
 }

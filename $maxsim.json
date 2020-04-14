@@ -1,0 +1,7 @@
+{
+    "autoload": {
+        "first": [
+            "ide\/inyection.php"
+        ]
+    }
+}

@@ -2,11 +2,13 @@
 
 
 
-echo 'Lab!';
+__();
+__(maxsim_config());
+__();
 
 
 
-__(maxsim\router($_SERVER['REQUEST_URI']));
+__(maxsim_router($_SERVER['REQUEST_URI']));
 
 __($_GET);
 

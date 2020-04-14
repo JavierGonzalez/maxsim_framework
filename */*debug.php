@@ -8,7 +8,7 @@ function __($echo='', $scroll_down=false) {
     $hrtime = $maxsim['crono'];
 
     echo '<br />'."\n";
-    echo ++$maxsim['debug_count'].'. &nbsp; '.date('Y-m-d H:i:s').' &nbsp; '.implode(' &nbsp; ', profiler($hrtime)).' &nbsp; ';
+    echo ++$maxsim['debug_count'].'. &nbsp; <span title="'.date('Y-m-d H:i:s').'">'.implode(' &nbsp; ', profiler($hrtime)).'</span> &nbsp; ';
 
 
     if (is_string($echo))

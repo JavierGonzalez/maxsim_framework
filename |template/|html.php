@@ -46,7 +46,7 @@ echo '
 </head>
 
 
-<body style="overflow-y:scroll;">
+<body>
 
 
 <div id="content_left">
@@ -87,7 +87,7 @@ echo '
 
 <?php
 foreach ((array)$maxsim['template']['lib']['js'] AS $file)
-	echo '<script type="text/javascript" enctype="application/javascript" src="'.$file.'"></script>'."\n";
+	echo '<script type="text/javascript" src="'.$file.'"></script>'."\n";
 ?>
 
 <script type="text/javascript">

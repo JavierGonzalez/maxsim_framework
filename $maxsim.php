@@ -9,7 +9,7 @@ function maxsim() {
     global $maxsim;
 
     $maxsim = [
-        'version' => '0.5.0',
+        'version' => '5.0.0',
         'crono'   => hrtime(true),
         ];
 
@@ -24,8 +24,7 @@ function maxsim() {
     $maxsim['target'] = $route['target'][0];
     foreach ($route AS $value)
         foreach ($value AS $file)
-            include($file);
-
+            maxsim_include($file);
 }
 
 
@@ -127,4 +126,18 @@ function maxsim_config(array $config_input=[], string $config_file='$maxsim.json
 
 function maxsim_relative(string $dir) {
     return (string) str_replace($_SERVER['DOCUMENT_ROOT'].'/', '', $dir).'/';
+}
+
+function maxsim_include($file) {
+    global $maxsim;
+
+    if (fnmatch("*.php", $file))
+        include($file);
+
+    else if (fnmatch("*.js", $file))
+        $maxsim['template']['lib']['js'][] = $file;
+
+    else if (fnmatch("*.css", $file))
+        $maxsim['template']['lib']['css'][] = $file;
+    
 }

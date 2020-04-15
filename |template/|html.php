@@ -91,7 +91,11 @@ foreach ((array)$maxsim['template']['lib']['js'] AS $file)
 ?>
 
 <script type="text/javascript">
-<?=$maxsim['template']['js']?>
+<?php
+foreach ($maxsim['template']['js_array'] AS $key => $value)
+    echo $key.' = "'.str_replace('"', '\"', $value).'";'."\n";
+echo $maxsim['template']['js'];
+?>
 </script>
 
 </body>

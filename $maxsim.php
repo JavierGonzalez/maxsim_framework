@@ -9,7 +9,7 @@ function maxsim() {
     global $maxsim;
 
     $maxsim = [
-        'version' => '5.0.0',
+        'version' => '0.5.0',
         'crono'   => hrtime(true),
         ];
 
@@ -88,20 +88,20 @@ function maxsim_router(string $uri) {
 
 function maxsim_autoload(array $ls) {
 
-    $prefixes = [
+    $prefix = [
         'first' => '*',
         'after' => '|',
         ];
 
     foreach ($ls AS $e)
-        if (strpos(basename($e),'.')!==false)
-            foreach ($prefixes AS $key => $value)
-                if (substr(basename($e),0,1)==$prefixes[$key])
+        if (fnmatch("*.*", $e))
+            foreach ($prefix AS $key => $value)
+                if (substr(basename($e),0,1)==$prefix[$key])
                     $route[$key][] = $e;
 
     foreach ($ls AS $e)
-        if (strpos(basename($e),'.')===false)
-            if (in_array(substr(basename($e),0,1), $prefixes))
+        if (!fnmatch("*.*", $e))
+            if (in_array(substr(basename($e),0,1), $prefix))
                 if ($ls_recursive = glob(str_replace('*','\*',$e).'/*'))
                     $route = array_merge_recursive((array)$route, maxsim_autoload($ls_recursive));
 
@@ -116,7 +116,7 @@ function maxsim_config(array $config_input=[], string $config_file='$maxsim.json
 
     if (count($config_input)>0) {
         $config = array_merge((array)$config, $config_input);
-        $config = array_filter($config, static function($a){return $a!==null;});
+        $config = array_filter($config, static function($a){ return $a!==null; });
         file_put_contents($config_file, json_encode($config, JSON_PRETTY_PRINT));
     }
 
@@ -128,7 +128,8 @@ function maxsim_relative(string $dir) {
     return (string) str_replace($_SERVER['DOCUMENT_ROOT'].'/', '', $dir).'/';
 }
 
-function maxsim_include($file) {
+
+function maxsim_include(string $file) {
     global $maxsim;
 
     if (fnmatch("*.php", $file))
@@ -139,5 +140,4 @@ function maxsim_include($file) {
 
     else if (fnmatch("*.css", $file))
         $maxsim['template']['lib']['css'][] = $file;
-    
 }

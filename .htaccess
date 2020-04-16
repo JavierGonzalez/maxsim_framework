@@ -7,3 +7,7 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule .* /$maxsim.php [L]
+
+#####################################
+
+

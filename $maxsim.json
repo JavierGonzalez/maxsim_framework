@@ -1,7 +1,7 @@
 {
     "autoload": {
         "first": [
-            "ide\/autoload.php"
+            "ide\/injection.php"
         ]
     }
 }

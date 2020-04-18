@@ -16,29 +16,35 @@ function maxsim() {
     ini_set('error_reporting', E_ERROR | E_WARNING | E_PARSE);
     ini_set('display_errors', 1);
 
-    maxsim_get($_SERVER['REQUEST_URI']);
+
+    $route = maxsim_router($_SERVER['REQUEST_URI']);
+    
+    $maxsim['target'] = $route['target'][0];
+    $maxsim['target_level'] = count(explode('/', $route['target'][0]))-1;
+
+    maxsim_get($_SERVER['REQUEST_URI'], $maxsim['target_level']);
 
     ob_start();
 
-    $route = maxsim_router($_SERVER['REQUEST_URI']);
-    $maxsim['target'] = $route['target'][0];
     foreach ($route AS $value)
         foreach ($value AS $file)
             maxsim_include($file);
 }
 
 
-function maxsim_get(string $uri) {
+function maxsim_get(string $uri, int $target_level=0) {
     global $_GET;
 
     $url = explode('?', $uri)[0];
-    
     if ($url=='/')
         $url = '/index';
 
-    $depth = array_filter(explode('/', $url));
+    $levels = array_filter(explode('/', $url));
+    foreach ($levels AS $level => $name)
+        if ($level-$target_level>0)
+            $levels_relative[$level-$target_level] = $name;
 
-    $_GET = array_merge($depth, $_GET);
+    $_GET = array_merge((array) $levels_relative, $_GET);
 }
 
 
@@ -86,7 +92,7 @@ function maxsim_router(string $uri) {
 }
 
 
-function maxsim_autoload(array $ls) {
+function maxsim_autoload(array $ls, $load_prefix=false) {
 
     $prefix = [
         'first' => '*',
@@ -96,14 +102,14 @@ function maxsim_autoload(array $ls) {
     foreach ($ls AS $e)
         if (fnmatch("*.*", $e))
             foreach ($prefix AS $key => $value)
-                if (substr(basename($e),0,1)==$prefix[$key])
+                if (substr(basename($e),0,1)==$prefix[$key] OR $load_prefix==$value)
                     $route[$key][] = $e;
 
     foreach ($ls AS $e)
         if (!fnmatch("*.*", $e))
             if (in_array(substr(basename($e),0,1), $prefix))
                 if ($ls_recursive = glob(str_replace('*','\*',$e).'/*'))
-                    $route = array_merge_recursive((array)$route, maxsim_autoload($ls_recursive));
+                    $route = array_merge_recursive((array)$route, maxsim_autoload($ls_recursive, substr(basename($e),0,1)));
 
     return (array) $route;
 }
@@ -124,7 +130,7 @@ function maxsim_config(array $config_input=[], string $config_file='$maxsim.json
 }
 
 
-function maxsim_relative(string $dir) {
+function maxsim_absolute(string $dir) {
     return (string) str_replace($_SERVER['DOCUMENT_ROOT'].'/', '', $dir).'/';
 }
 
@@ -133,7 +139,7 @@ function maxsim_include(string $file) {
     global $maxsim;
 
     if (fnmatch("*.php", $file))
-        include($file);
+        @include($file);
 
     else if (fnmatch("*.js", $file))
         $maxsim['template']['lib']['js'][] = $file;

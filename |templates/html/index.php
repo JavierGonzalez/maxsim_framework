@@ -1,25 +1,13 @@
-<?php
+<?php # maxsim
 
-
-if (is_array($echo)) {
-    ob_end_clean();
-    header('Content-type:application/json;charset=utf-8');
-    echo json_encode($echo, JSON_PRETTY_PRINT);
-    exit;
-}
-
-
-header('Content-Type:text/html; charset=utf-8');
 
 $echo = ob_get_contents();
 ob_end_clean();
 
-//////////////////////////////////////////////////////////////////
+header('Content-Type:text/html; charset=utf-8');
 
 
 $maxsim['template']['title'] = $maxsim['template']['name'].($maxsim['template']['title']?' | '.$maxsim['template']['title']:'');
-
-
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -34,7 +22,7 @@ $maxsim['template']['title'] = $maxsim['template']['name'].($maxsim['template'][
 <?php
 
 foreach ((array)$maxsim['template']['lib']['css'] AS $file)
-	echo '<link rel="stylesheet" enctype="text/css" href="'.$file.'" media="all" />'."\n";
+	echo '<link rel="stylesheet" enctype="text/css" href="/'.$file.'" media="all" />'."\n";
 
 echo '
 <style type="text/css">
@@ -42,6 +30,14 @@ echo '
 </style>';
 
 ?>
+
+
+<script type="text/javascript">
+<?php
+foreach ($maxsim['template']['js_array'] AS $key => $value)
+    echo $key.' = "'.str_replace('"', '\"', $value).'";'."\n";
+?>
+</script>
 
 </head>
 
@@ -84,18 +80,13 @@ echo '
 
 
 
-
 <?php
 foreach ((array)$maxsim['template']['lib']['js'] AS $file)
-	echo '<script type="text/javascript" src="'.$file.'"></script>'."\n";
+	echo '<script type="text/javascript" src="/'.$file.'"></script>'."\n";
 ?>
 
 <script type="text/javascript">
-<?php
-foreach ($maxsim['template']['js_array'] AS $key => $value)
-    echo $key.' = "'.str_replace('"', '\"', $value).'";'."\n";
-echo $maxsim['template']['js'];
-?>
+<?=$maxsim['template']['js']?>
 </script>
 
 </body>

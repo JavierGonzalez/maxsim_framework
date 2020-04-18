@@ -1,9 +1,10 @@
+
 #ide_editor { 
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
-    height: 100%;
     width: 66%;
+    bottom:22px;
 }
 
 #ide_footer {
@@ -12,10 +13,30 @@
     right: 0;
     width: 66%;
     z-index:100;
-    color:#FFF;
-    font-weight:bold;
-    padding: 4px 0 4px 20px;
-    margin-right:-20px;
+    
+    padding: 4px 0 4px 15px;
+    margin-right:-15px;
+
+    color:#999;
     background-color:#333;
-    font: 13px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+    font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+}
+
+#ide_footer a {
+    color:#BBB;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+
+#ide_iframe {
+    border:none;  
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    box-sizing: border-box;
 }

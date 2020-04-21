@@ -1,12 +1,12 @@
 <?php
 
-__();
+__('z');
 __(maxsim_router($_SERVER['REQUEST_URI']));
 
-__($_GET);
 
 __($maxsim);
 
+echo 'patata!';
 
 
 

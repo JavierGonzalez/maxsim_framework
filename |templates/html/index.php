@@ -82,7 +82,7 @@ foreach ($maxsim['template']['js_array'] AS $key => $value)
 
 <?php
 foreach ((array)$maxsim['template']['lib']['js'] AS $file)
-	echo '<script type="text/javascript" src="/'.$file.'"></script>'."\n";
+	echo '<script type="module" src="/'.$file.'"></script>'."\n";
 ?>
 
 <script type="text/javascript">

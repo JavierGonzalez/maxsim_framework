@@ -6,10 +6,11 @@ $maxsim['template']['js_array']['maxsim_target'] = $maxsim['target'];
 
 $maxsim['template']['js'] .= '
 
-$("body").on("keydown", function(e) {
+document.querySelector("body").addEventListener("keydown", function(e) {
     if(typeof ace == "undefined" && (e.keyCode == 27 || (e.ctrlKey && e.keyCode == 83))) {
-        $.getScript(ide_dir + "ide.js");
+        import(ide_dir + "ide.js");
         e.preventDefault();
     }
 });
+
 ';

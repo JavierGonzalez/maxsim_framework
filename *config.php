@@ -1,5 +1,3 @@
 <?php
 
-// DEFINE
-
-$maxsim['template']['name'] = 'maxsim';
+ini_set('display_errors', 1);

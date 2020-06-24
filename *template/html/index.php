@@ -21,7 +21,7 @@ $maxsim['template']['title'] = $maxsim['template']['name'].($maxsim['template'][
 
 <?php
 
-foreach ((array)$maxsim['template']['lib']['css'] AS $file)
+foreach ((array)$maxsim['template']['autoload']['css'] AS $file)
 	echo '<link rel="stylesheet" enctype="text/css" href="/'.$file.'" media="all" />'."\n";
 
 echo '
@@ -34,7 +34,7 @@ echo '
 
 <script type="text/javascript">
 <?php
-foreach ($maxsim['template']['js_array'] AS $key => $value)
+foreach ((array)$maxsim['template']['js_array'] AS $key => $value)
     echo $key.' = "'.str_replace('"', '\"', $value).'";'."\n";
 ?>
 </script>
@@ -81,7 +81,7 @@ foreach ($maxsim['template']['js_array'] AS $key => $value)
 
 
 <?php
-foreach ((array)$maxsim['template']['lib']['js'] AS $file)
+foreach ((array)$maxsim['template']['autoload']['js'] AS $file)
 	echo '<script type="module" src="/'.$file.'"></script>'."\n";
 ?>
 

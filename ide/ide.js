@@ -11,7 +11,7 @@ var ide_footer = '<a href="https://maxsim.tech">maxsim</a><span style="float:rig
 $("body").append('<div id="ide"><div id="ide_footer">' + ide_footer + '</div><div id="ide_editor"></div></div>');
 
 
-$.get(ide_dir + "api/read?file=" + maxsim_target, function(data){
+$.get(ide_dir + "api/read?file=" + ide_target, function(data){
     $("#ide_editor").text(data);
     
     ide_editor = ace.edit("ide_editor");
@@ -21,6 +21,7 @@ $.get(ide_dir + "api/read?file=" + maxsim_target, function(data){
     ide_editor.focus();
     ide_editor.navigateFileEnd();
     ide_editor.setShowPrintMargin(false);
+    ide_editor.setOption("fixedWidthGutter", true);
     
     $("#ide_editor").resizable({ 
         handles: "w", 
@@ -52,7 +53,7 @@ $("body").on("keydown", function(e) {
         e.preventDefault();
     } else if ($("#ide").is(":visible") == true && e.ctrlKey && e.keyCode == 83) {
         $("#ide").toggle();
-        $.post(ide_dir + "api/write?file=" + maxsim_target, { code: ide_editor.getValue() }, function(data){
+        $.post(ide_dir + "api/write?file=" + ide_target, { code: ide_editor.getValue() }, function(data){
             location.reload();
         });
         e.preventDefault();

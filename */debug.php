@@ -5,10 +5,10 @@
 function __($echo='', $scroll_down=false) {
 	global $maxsim;
 
-    $hrtime = $maxsim['crono'];
+    $hrtime = $maxsim['debug']['crono'];
 
     echo '<br />'."\n";
-    echo ++$maxsim['debug_count'].'. &nbsp; <span title="'.date('Y-m-d H:i:s').'">'.implode(' &nbsp; ', profiler($hrtime)).'</span> &nbsp; ';
+    echo ++$maxsim['debug']['count'].'. &nbsp; <span title="'.date('Y-m-d H:i:s').'">'.implode(' &nbsp; ', profiler($hrtime)).'</span> &nbsp; ';
 
 
     if (is_string($echo))
@@ -20,7 +20,7 @@ function __($echo='', $scroll_down=false) {
     
 
     if ($scroll_down) {
-        if ($maxsim['debug_count']==1) {
+        if ($maxsim['debug']['count']==1) {
             if (function_exists('apache_setenv')) {
                 @apache_setenv('no-gzip', 1);
             }
@@ -34,7 +34,7 @@ function __($echo='', $scroll_down=false) {
         ob_flush();
     }
 
-    $maxsim['crono'] = hrtime(true);
+    $maxsim['debug']['crono'] = hrtime(true);
 }
 
 
@@ -52,7 +52,7 @@ function profiler($hrtime=false) {
     global $maxsim;
 
     if (!$hrtime)
-        $hrtime = $maxsim['crono'];
+        $hrtime = $maxsim['debug']['crono'];
 
     $output[] = number_format((hrtime(true)-$hrtime)/1000/1000,2).' ms';
     

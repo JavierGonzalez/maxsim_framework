@@ -1,6 +1,6 @@
 {
     "autoload": {
-        "first": [
+        "autoload": [
             "ide\/injection.php"
         ]
     }

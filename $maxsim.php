@@ -74,7 +74,7 @@ function maxsim_router(string $uri) {
             if (!$route['app'] AND $id>0 AND basename($e)=='index.php')
                 $route['app'][] = $e;
 
-        if ($id===0 AND in_array('maxsim.json', $ls))
+        if ($id===0 AND in_array('$maxsim.json', $ls))
             $route = array_merge_recursive($route, (array) maxsim_config()['autoload']);
 
         if (count($route['app'])>0)
@@ -106,7 +106,7 @@ function maxsim_autoload(array $ls, $load_prefix=false) {
 }
 
 
-function maxsim_config(array $config_input=[], string $config_file='maxsim.json') {
+function maxsim_config(array $config_input=[], string $config_file='$maxsim.json') {
 
     if (file_exists($config_file))
         $config = (array)json_decode(file_get_contents($config_file), true);

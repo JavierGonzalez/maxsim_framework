@@ -2,4 +2,4 @@ order deny,allow
 deny from all
 allow from 127.0.0.1
 allow from 83.34.143.236
-allow from 81.0.51.87
+allow from 81.0.35.87

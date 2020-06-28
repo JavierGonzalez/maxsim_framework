@@ -1,7 +1,0 @@
-{
-    "autoload": {
-        "autoload": [
-            "ide\/injection.php"
-        ]
-    }
-}

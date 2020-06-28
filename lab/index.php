@@ -1,6 +1,8 @@
 <?php
 
 
+// maxsim_config(['prueba'=>'ok'], '*test.json');
+
 __();
 
 __($maxsim);

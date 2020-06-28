@@ -11,3 +11,9 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule .* /$maxsim.php [L]
 
 #####################################
+
+
+
+
+
+

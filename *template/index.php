@@ -1,12 +1,20 @@
 <?php # maxsim
 
+
 function maxsim_template() {
     global $maxsim, $echo;
 
-    if (is_array($echo))
-        include('api/json.php');
-    else 
+    if ($maxsim['output']=='json' OR is_array($echo)) {
+        ob_end_clean();
+        header('Content-type:application/json;charset=utf-8');
+        echo json_encode((array)$echo, JSON_PRETTY_PRINT);
+    
+    } else {
+        $echo = ob_get_contents();
+        ob_end_clean();
+        header('Content-Type:text/html; charset=utf-8');
         include('html/index.php');
+    }
 
 }
 

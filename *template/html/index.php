@@ -1,12 +1,5 @@
 <?php # maxsim
 
-
-$echo = ob_get_contents();
-ob_end_clean();
-
-header('Content-Type:text/html; charset=utf-8');
-
-
 $maxsim['template']['title'] = $maxsim['template']['name'].($maxsim['template']['title']?' | '.$maxsim['template']['title']:'');
 
 ?><!DOCTYPE html>

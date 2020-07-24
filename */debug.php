@@ -52,7 +52,7 @@ function profiler($hrtime=false) {
     global $maxsim;
 
     if (!$hrtime)
-        $hrtime = $maxsim['debug']['crono'];
+        $hrtime = $maxsim['debug']['crono_start'];
 
     $output[] = number_format((hrtime(true)-$hrtime)/1000/1000,2).' ms';
     

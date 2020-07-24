@@ -1,36 +1,41 @@
 <?php # maxsim.tech — Copyright (c) 2020 Javier González González — MIT License
 
 
-maxsim();
-exit;
+$maxsim = [
+    'version' => '0.5.0',
+    'debug'   => ['crono_start' => hrtime(true)],
+    'route'   => maxsim_router($_SERVER['REQUEST_URI']),
+    ];
 
+maxsim_get($_SERVER['REQUEST_URI']);
 
-function maxsim() {
-    global $maxsim;
+ob_start();
 
-    $maxsim = [
-        'version' => '0.5.0',
-        'debug'   => [ 'crono' => hrtime(true) ],
-        ];
+foreach ($maxsim['route'] AS $value) {
+    foreach ($value AS $file) {
+        
+        if (substr($file,-4)=='.php')
+            @include($file);
 
-    error_reporting(E_ALL ^ E_NOTICE);
+        else if (substr($file,-4)=='.css')
+            $maxsim['template']['autoload']['css'][] = $file;
 
-    $maxsim['route'] = maxsim_router($_SERVER['REQUEST_URI']);
+        else if (substr($file,-3)=='.js')
+            $maxsim['template']['autoload']['js'][] = $file;
 
-    maxsim_get($_SERVER['REQUEST_URI']);
-
-    ob_start();
-
-    foreach ($maxsim['route'] AS $value)
-        foreach ($value AS $file)
-            maxsim_include($file);
+        else if (substr($file,-5)=='.json')
+            if ($key_name = basename(str_replace('*', '', $file),'.json'))
+                $maxsim[$key_name] = array_merge_recursive((array) $maxsim[$key_name], (array) maxsim_config([], $file));
+    }
 }
+
+exit;
 
 
 function maxsim_get(string $uri) {
     global $maxsim, $_GET;
 
-    $app_level = count(explode('/', $maxsim['route']['app'][0]))-1;
+    $app_level = count(explode('/', $maxsim['route']['app'][0]))-1; // Refact
 
     $url = explode('?', $uri)[0];
     if ($url=='/')
@@ -39,7 +44,7 @@ function maxsim_get(string $uri) {
     $levels = array_filter(explode('/', $url));
     foreach ($levels AS $level => $name)
         if ($level-$app_level>0)
-            $levels_relative[$level-$app_level] = $name; // Refact
+            $levels_relative[$level-$app_level] = $name;
 
     $_GET = array_merge((array) $levels_relative, $_GET);
 }
@@ -48,7 +53,7 @@ function maxsim_get(string $uri) {
 function maxsim_router(string $uri) {
 
     $route = [
-        'autoload' => [], // Include files or directories starting with *.
+        'autoload' => [], // Include files and directories starting with *.
         'app'      => [], // Application code.
         ];
 
@@ -58,10 +63,10 @@ function maxsim_router(string $uri) {
 
     $levels = explode('/', $url);
 
-    foreach ($levels AS $id => $level) {
+    foreach ($levels AS $id => $level) { // Refact
         $level_path[] = $level;
 
-        if (!$ls = glob(($id===0?'*':implode('/',array_filter($level_path)).'/*'))) // Refact
+        if (!$ls = glob(($id===0?'*':implode('/',array_filter($level_path)).'/*')))
             break;
 
         $route = array_merge_recursive($route, maxsim_autoload($ls));
@@ -78,8 +83,11 @@ function maxsim_router(string $uri) {
             break;
     }
 
-    if (!$route['app'] AND file_exists('404.php'))
-        $route['app'][] = '404.php';
+
+    if (!$route['app'])
+        if (header("HTTP/1.0 404 Not Found"))
+            if (file_exists('404.php'))
+                $route['app'][] = '404.php';
 
     return (array) $route;
 }
@@ -99,24 +107,6 @@ function maxsim_autoload(array $ls, $load_prefix=false) {
                     $route = array_merge_recursive((array)$route, maxsim_autoload($ls_recursive, substr(basename($e),0,1)));
 
     return (array) $route;
-}
-
-
-function maxsim_include(string $file) {
-    global $maxsim;
-
-    if (substr($file,-4)=='.php')
-        @include($file);
-
-    else if (substr($file,-4)=='.css')
-        $maxsim['template']['autoload']['css'][] = $file;
-
-    else if (substr($file,-3)=='.js')
-        $maxsim['template']['autoload']['js'][] = $file;
-
-    else if (substr($file,-5)=='.json')
-        if ($key_name = str_replace(['*','.json'], '', $file))
-            $maxsim[$key_name] = array_merge_recursive((array) $maxsim[$key_name], (array) maxsim_config([], $file));
 }
 
 

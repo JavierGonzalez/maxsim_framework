@@ -1,3 +1,3 @@
 <?php
 
-echo 'maxsim<br/><br />Coming soon...';
+echo 'maxsim<br/><br />Building...';

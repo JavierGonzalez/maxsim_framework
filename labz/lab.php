@@ -1,6 +1,8 @@
 <?php
 
-echo 'Building...z';
+echo 'ok';
+
 
 __($_GET);
+
 __($maxsim);

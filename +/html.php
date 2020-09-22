@@ -1,8 +1,7 @@
-<?php
+<?php # BMP — Javier González González
 
-namespace html;
 
-function table($data, $config=false) {
+function html_table($data, $config=false) {
     
     if (!is_array($data))
         return '';
@@ -32,7 +31,7 @@ function table($data, $config=false) {
     foreach ($data AS $row) {
         $tr_extra = '';
         $td = '';
-        foreach ($row AS $key => $column) {
+        foreach ((array)$row AS $key => $column) {
             $td_extra = '';
             
             if (is_array($column))
@@ -81,28 +80,38 @@ function table($data, $config=false) {
     }
     
 
-    return "\n\n".'<table>'.$html.'</table>'."\n\n";
+    return "\n\n".'<table'.($config['id']?' id="'.$config['id'].'"':'').'>'.$html.'</table>'."\n\n";
 }
 
 
-function a($url, $text, $blank=false) {
+function html_br($multiplier=1) {
+    return str_repeat('<br />', $multiplier);
+}
+
+function html_a($url, $text, $blank=false) {
     return '<a href="'.$url.'"'.($blank?' target="_blank"':'').'>'.$text.'</a>';
 }
 
 
-function b($text) {
+function html_b($text) {
     return '<b>'.$text.'</b>';
 }
 
 
-function h($text, $num=1) {
+function html_h($text, $num=1) {
     return '<h'.$num.'>'.$text.'</h'.$num.'>';
 }
 
 
-function button($url=false, $text='', $style='primary', $extra=false) {
+function html_button($url=false, $text='', $style='primary', $extra=false) {
     if ($url)
         return '<a href="'.$url.'" class="btn btn-'.$style.'">'.$text.'</a>';
     else
         return '<button type="button" class="btn btn-'.$style.'">'.$text.'</button>';
+}
+
+
+function html_link_to_a($input) {
+   $pattern = '@(http(s)?://)?(([a-zA-Z])([-\w]+\.)+([^\s\.]+[^\s]*)+[^,.\s])@';
+   return $output = preg_replace($pattern, '<a href="http$2://$3" target="_blank">$0</a>', $input);
 }

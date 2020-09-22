@@ -1,6 +1,7 @@
 <?php
 
-echo 'Building...z';
+if (!$_GET[1]) {
 
-__($_GET);
-__($maxsim);
+    echo 'Building...';
+
+}

@@ -6,6 +6,7 @@ __($_GET);
 
 __($maxsim);
 
+__($_SERVER);
 
 exit;
 

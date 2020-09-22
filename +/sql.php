@@ -1,11 +1,11 @@
-<?php
+<?php # BMP — Javier González González
 
 
 function sql_connect($server_sql=false) {
     global $__sql;
 
     if (!$server_sql)
-        $server_sql = URL_SQL;
+        $server_sql = passwords['sql'];
 
 	$p = parse_url($server_sql);
 	

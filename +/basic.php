@@ -1,6 +1,5 @@
 <?php
 
-
 function every($seconds=60, $id=0) {
     global $every_last;
 

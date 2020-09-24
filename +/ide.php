@@ -1,3 +1,3 @@
 <?php
 
-include('dev/ide/injection.php');
+include('ide/injection.php');

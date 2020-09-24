@@ -1,9 +1,9 @@
 // maxsim.tech
 
 
-import "./jquery-3.5.0.min.js";
-import "./jquery-ui.min.js";
-import "./ace/ace.js";
+import "./lib/jquery-3.5.0.min.js";
+import "./lib/jquery-ui.min.js";
+import "./lib/ace/ace.js";
 
 
 var ide_editor = '';
@@ -15,7 +15,7 @@ $.get(ide_dir + "api/read?file=" + ide_target, function(data){
     $("#ide_editor").text(data);
     
     ide_editor = ace.edit("ide_editor");
-    ace.config.set("basePath", ide_dir + "ace");
+    ace.config.set("basePath", ide_dir + "lib/ace");
     ide_editor.setTheme("ace/theme/monokai");
     ide_editor.session.setMode("ace/mode/php");
     ide_editor.focus();
@@ -42,7 +42,7 @@ $("<link/>", {
 $("<link/>", {
    rel: "stylesheet",
    type: "text/css",
-   href: ide_dir + "jquery-ui.min.css"
+   href: ide_dir + "lib/jquery-ui.min.css"
 }).appendTo("head");
 
 

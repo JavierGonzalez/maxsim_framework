@@ -13,7 +13,6 @@ Maximum Simplicity Framework
 * Template with: `$maxsim['output'] = 'template';`
 * Framework core in a 123-line single file: `$maxsim.php`
 
-
 ### To know
 
 * In development.
@@ -31,6 +30,11 @@ Maximum Simplicity Framework
 * Text-plain output with: `$maxsim['output'] = 'text';` or `exit;`
 * JSON output with: `$maxsim['output'] = 'json';` and array in `$echo`
 * Simple, short, lightweight, no PSR, snake_case, procedural first, flexible, expansible, old-style.
+
+
+### Used in
+- **[POL](https://github.com/JavierGonzalez/POL)** A democratic voting experiment.
+- **[BMP](https://github.com/JavierGonzalez/BMP)** A hashpower voting system.
 
 
 ### Future features

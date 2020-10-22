@@ -1,8 +1,4 @@
 <?php
 
-if (!$_GET[1]) {
-
-    //$maxsim['redirect'] = '/example/foro';
+if (!$_GET[1])
     echo 'Building...';
-
-}

@@ -1,4 +1,4 @@
-<?php # BMP — Javier González González
+<?php # maxsim.tech — Copyright (c) 2005-2020 Javier González González <gonzo@virtualpol.com> — MIT License
 
 
 function sql_connect($server_sql=false) {

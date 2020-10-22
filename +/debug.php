@@ -1,4 +1,4 @@
-<?php
+<?php # maxsim.tech — Copyright (c) 2005-2020 Javier González González <gonzo@virtualpol.com> — MIT License
 
 
 function __($echo='', $echo2=false, $scroll_down=false) {

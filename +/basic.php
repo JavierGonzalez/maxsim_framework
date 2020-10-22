@@ -1,4 +1,4 @@
-<?php
+<?php # maxsim.tech — Copyright (c) 2005-2020 Javier González González <gonzo@virtualpol.com> — MIT License
 
 function every($seconds=60, $id=0) {
     global $every_last;

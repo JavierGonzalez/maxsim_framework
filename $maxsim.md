@@ -1,4 +1,0 @@
-## maxsim framework
-
-* Maximum simplicity
-*  

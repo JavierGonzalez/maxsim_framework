@@ -11,7 +11,7 @@ Maximum Simplicity Framework
 * Autoload files with `+` prefix and suffix `php js css ini json`.
 * Autoload files inside a directory with `+` prefix, recursively.
 * Template with: `$maxsim['output'] = 'template';`
-* Framework engine in a single 123-line file: `$maxsim.php`
+* Framework core in a 123-line single file: `$maxsim.php`
 
 
 ### To know

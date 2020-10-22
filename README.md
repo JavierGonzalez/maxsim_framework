@@ -1,7 +1,6 @@
 # maxsim 5.8
 
 Maximum Simplicity Framework
-____________________________
 
 
 ### Features

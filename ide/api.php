@@ -1,4 +1,4 @@
-<?php # maxsim
+<?php # maxsim.tech — MIT License — Copyright (c) 2005-2020 Javier González González <gonzo@virtualpol.com>
 
 
 if ($_GET[1]=='read' AND $_GET['file'])

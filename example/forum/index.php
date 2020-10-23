@@ -1,11 +1,7 @@
 <?php
 
-echo 'Foro con index';
-
-
+echo 'Forum index';
 
 __($_GET);
 
 __($maxsim);
-
-__($_SERVER);

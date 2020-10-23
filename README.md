@@ -7,10 +7,10 @@ Maximum Simplicity Framework
 * 0.4 ms.
 * Hello World! is one line.
 * URL routing by file system.
-* Autoload files with `+` prefix and suffix `php js css ini json`.
-* Autoload files inside a directory with `+` prefix, recursively.
-* Template with: `$maxsim['output'] = 'template';`
-* Framework core in a 123-line single file: `$maxsim.php`
+* Autoload files with prefix `+` and suffix `php js css ini json`.
+* Autoload files inside a directory with prefix `+`, recursively.
+* Template selection with: `$maxsim['output'] = 'template';`
+* Framework core in a 123-line single file called: `$maxsim.php`
 
 
 ### Used in
@@ -21,26 +21,26 @@ Maximum Simplicity Framework
 ### To know
 * In development.
 * Minimum required: `.htaccess` and `$maxsim.php`.
-* Framework info in `$maxsim` array.
+* Framework info in array `$maxsim`.
 * Reserved functions, variables and constants starting with `maxsim`.
 * URL directories beyond the app file are in: `$_GET[1] $_GET[2] ..`
-* `ini` files are loaded with a constant with the file name.
-* `json` files are loaded with a variable with the file name.
 * Autoload `css` and `js` files are included in the template.
+* `ini` files are loaded with a constant named with the file name.
+* `json` files are loaded with a variable named with the file name.
 * Error 404 when app returns null `echo`.
-* Optional `404.php` file when 404 error template.
-* Framework app redirection with: `$maxsim['redirect'] = '/url';`
-* Public access denied for any file containing `password`.
+* Optional `404.php` for personalization.
+* Access denied for any file name containing `password`.
+* Framework app url redirection with: `$maxsim['redirect'] = '/url';`
 * Text-plain output with: `exit;` or `$maxsim['output'] = 'text';`
-* JSON output with: `$maxsim['output'] = 'json';` and array in `$echo`
-* Simple, short, light. No PSR, snake_case, procedural first, flexible, expansible, old school.
+* JSON API output when `$echo` is array and `$maxsim['output'] = 'json';`.
+* Simple, short, lightweight, no PSR, snake_case, procedural first, flexible, expansible, old school.
 
 
 ### Future features
 * Docker.
 * Debugger.
+* IDE inside.
 * Users system.
-* Integrated IDE.
 * ORM and SQL client.
 * Code and app marketplace.
 
@@ -52,5 +52,4 @@ Maximum Simplicity Framework
 * MySQL, MariaDB
 
 
-Javier González González — gonzo@virtualpol.com
-2005-2020
+Javier González González — gonzo@virtualpol.com — 2005-2020

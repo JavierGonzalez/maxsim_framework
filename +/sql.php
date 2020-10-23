@@ -1,5 +1,9 @@
-<?php # maxsim.tech — Copyright (c) 2005-2020 Javier González González <gonzo@virtualpol.com> — MIT License
+<?php # maxsim.tech — MIT License — Copyright (c) 2005-2020 Javier González González <gonzo@virtualpol.com>
 
+
+function e($dangerous_user_input) {
+	return mysqli_real_escape_string(sql_link(), $dangerous_user_input);
+}
 
 function sql_connect($server_sql=false) {
     global $__sql;
@@ -39,7 +43,6 @@ function sql_link() {
 
 	return $__sql['link'][0];
 }
-
 
 
 function sql($query) {
@@ -236,10 +239,4 @@ function sql_close() {
 function sql_error() {
 	$msg = @mysqli_error(sql_link());
 	return ($msg?$msg:'');
-}
-
-
-
-function e($danger_user_input) {
-	return mysqli_real_escape_string(sql_link(), $danger_user_input);
 }

@@ -1,4 +1,4 @@
-<?php # maxsim.tech — Copyright (c) 2005-2020 Javier González González <gonzo@virtualpol.com> — MIT License
+<?php # maxsim.tech — MIT License — Copyright (c) 2005-2020 Javier González González <gonzo@virtualpol.com>
 
 maxsim:
 
@@ -53,7 +53,7 @@ else if ($maxsim['output']==='json' AND is_array($echo)) {
             include('404.php');
             $echo = ob_get_contents();
         } else
-            $echo = 'Error 404: not found.';
+            $echo = 'Error 404: NOT FOUND.';
     }
 
     ob_end_clean();

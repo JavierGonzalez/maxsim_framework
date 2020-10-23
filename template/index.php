@@ -1,9 +1,5 @@
-<?php # maxsim
-
-$maxsim['template']['title'] = $maxsim['template']['name'].($maxsim['template']['title']?' | '.$maxsim['template']['title']:'');
-
-?><!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
 
 <title><?=$maxsim['template']['title']?></title>

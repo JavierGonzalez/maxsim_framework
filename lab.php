@@ -1,5 +1,6 @@
 <?php
 
-__($_GET);
 
-__($maxsim);
+___($_GET);
+
+___($maxsim);

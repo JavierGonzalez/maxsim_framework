@@ -1,11 +1,11 @@
-# maxsim 5.8
+# maxsim 0.5
 
 Maximum Simplicity Framework
 
 
 ### Features
 * 0.4 ms.
-* Hello World! is one line.
+* Hello World! In one line.
 * URL routing by file system.
 * Autoload files with prefix `+` and suffix `php js css ini json`.
 * Autoload files inside a directory with prefix `+`, recursively.
@@ -28,12 +28,11 @@ Maximum Simplicity Framework
 * `ini` files are loaded with a constant named with the file name.
 * `json` files are loaded with a variable named with the file name.
 * Error 404 when app returns null `echo`.
-* Optional `404.php` for personalization.
 * Access denied for any file name containing `password`.
 * Framework app url redirection with: `$maxsim['redirect'] = '/url';`
 * Text-plain output with: `exit;` or `$maxsim['output'] = 'text';`
 * JSON API output when `$echo` is array and `$maxsim['output'] = 'json';`.
-* Simple, short, lightweight, no PSR, snake_case, procedural first, flexible, expansible, old school.
+* Simple, short, lightweight, snake_case, procedural first, flexible, expansible, old school.
 
 
 ### Future features
@@ -52,4 +51,4 @@ Maximum Simplicity Framework
 * MySQL, MariaDB
 
 
-Javier González González — gonzo@virtualpol.com — 2005-2020
+Javier González González <gonzo@virtualpol.com>

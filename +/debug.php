@@ -1,7 +1,7 @@
 <?php # maxsim.tech — MIT License — Copyright (c) 2005-2020 Javier González González <gonzo@virtualpol.com>
 
 
-function __($echo='', $echo2=false, $scroll_down=false) {
+function ___($echo='', $echo2=false, $scroll_down=false) {
 	global $maxsim;
 
     if (!isset($maxsim['debug']['crono']))

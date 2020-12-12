@@ -47,7 +47,7 @@ Maximum Simplicity Framework
 ### Tested environment
 * GNU/Linux CentOS 7.8 x86_64
 * Apache
-* PHP 7.4
+* PHP 8
 * MySQL, MariaDB
 
 

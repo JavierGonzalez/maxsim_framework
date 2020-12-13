@@ -2,6 +2,6 @@
 
 echo 'Example! '.rand(100,999);
 
-__($_GET);
+___($_GET);
 
-__($maxsim);
+___($maxsim);

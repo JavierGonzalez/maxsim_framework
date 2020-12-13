@@ -4,22 +4,22 @@ Maximum Simplicity Framework
 
 
 ### Features
-* 0.4 ms.
+* 0.2 ms.
 * Hello World! In one line.
-* URL routing by file system.
-* Autoload files with prefix `+` and suffix `php js css ini json`.
+* URL routing by File System.
+* Autoload files with prefix `+` and suffix `.php .js .css .ini .json`.
 * Autoload files inside a directory with prefix `+`, recursively.
 * Template selection with: `$maxsim['output'] = 'template';`
 * Framework core in a 123-line single file called: `$maxsim.php`
 
 
 ### Used in
-- **[POL](https://github.com/JavierGonzalez/POL)** A democratic voting experiment.
+- **[POL](https://github.com/JavierGonzalez/POL)** A democratic voting community.
 - **[BMP](https://github.com/JavierGonzalez/BMP)** A Bitcoin hashpower voting system.
 
 
 ### To know
-* In development.
+* In development!
 * Minimum required: `.htaccess` and `$maxsim.php`.
 * Framework info in array `$maxsim`.
 * Reserved functions, variables and constants starting with `maxsim`.
@@ -27,7 +27,7 @@ Maximum Simplicity Framework
 * Autoload `css` and `js` files are included in the template.
 * `ini` files are loaded with a constant named with the file name.
 * `json` files are loaded with a variable named with the file name.
-* Error 404 when app returns null `echo`.
+* 404 error when app print is null.
 * Access denied for any file name containing `password`.
 * Framework app url redirection with: `$maxsim['redirect'] = '/url';`
 * Text-plain output with: `exit;` or `$maxsim['output'] = 'text';`
@@ -45,9 +45,9 @@ Maximum Simplicity Framework
 
 
 ### Tested environment
+* PHP 8
 * GNU/Linux CentOS 7.8 x86_64
 * Apache
-* PHP 8
 * MySQL, MariaDB
 
 

@@ -109,11 +109,11 @@ function maxsim_get() {
     if (substr($maxsim['app'],-9)==='index.php')
         $url = '/index'.$url;
 
+    $id = 0;
     foreach (array_filter(explode('/', $url)) AS $level => $value)
         if ($level-$app_level > 0)
-            $_GET[] = $value;
+            $_GET[$id++] = $value;
 }
-
 
 
 

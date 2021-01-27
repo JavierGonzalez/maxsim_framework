@@ -22,6 +22,7 @@ Maximum Simplicity Framework
 * In development!
 * Minimum required: `.htaccess` and `$maxsim.php`.
 * Framework info in array `$maxsim`.
+* Server-Timing header for performance debug.
 * Reserved functions, variables and constants starting with `maxsim`.
 * URL directories beyond the app file are in: `$_GET[1] $_GET[2] ..`
 * Autoload `css` and `js` files are included in the template.

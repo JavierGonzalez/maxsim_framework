@@ -76,7 +76,7 @@ function maxsim_timing() {
     
     foreach ((array) $maxsim['debug']['timing'] AS $key => $value) { 
         if ($value > 1000000000) {
-            $server_timing[] = ++$id.';dur='.round(($value-$microtime_last)*1000, 2).';desc="'.$key.'"';
+            $server_timing[] = ++$id.';dur='.round(($value-$microtime_last)*1000, 3).';desc="'.$key.'"';
             $microtime_last = $value;
         } else {
             $server_timing[] = $key.';dur='.round($value,2).';desc="'.$key.'"';
@@ -84,7 +84,7 @@ function maxsim_timing() {
     }
         
     $server_timing[] = '99;desc="memory '.number_format(memory_get_usage(false)/1024).' kb"';
-    $server_timing[] = 'Total;dur='.round((microtime(true)-$_SERVER['REQUEST_TIME_FLOAT'])*1000, 2);
+    $server_timing[] = 'Total;dur='.round((microtime(true)-$_SERVER['REQUEST_TIME_FLOAT'])*1000, 3);
 
     header('server-timing: '.implode(', ', (array)$server_timing));
 }

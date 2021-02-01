@@ -53,7 +53,7 @@ function sql($query) {
 
 	$result = mysqli_query(sql_link(), $query);
 
-	$maxsim['debug']['timing']['sql'] += round((microtime(true)-$crono)*1000, 2);
+	$maxsim['debug']['timing']['sql'] += round((microtime(true)-$crono)*1000, 3);
 
     
     $__sql['count']++;

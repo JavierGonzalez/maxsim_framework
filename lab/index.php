@@ -9,7 +9,7 @@ ___($maxsim);
 // sleep(1);
 
 
-___(sql("SHOW TABLES"));
+// ___(sql("SHOW TABLES"));
 
 
-// exit;
+//exit;

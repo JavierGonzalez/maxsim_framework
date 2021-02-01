@@ -66,8 +66,12 @@ function profiler($microtime=false) {
 function maxsim_timing() {
     global $maxsim;
     
-    $maxsim['debug']['timing']['template'] = microtime(true);
-
+    if (isset($maxsim['debug']['timing']['app']))
+        $maxsim['debug']['timing']['template'] = microtime(true);
+    else
+        $maxsim['debug']['timing']['app'] = microtime(true);
+    
+    
     $microtime_last = $_SERVER['REQUEST_TIME_FLOAT'];
     
     foreach ((array) $maxsim['debug']['timing'] AS $key => $value) { 
@@ -75,7 +79,7 @@ function maxsim_timing() {
             $server_timing[] = ++$id.';dur='.round(($value-$microtime_last)*1000, 2).';desc="'.$key.'"';
             $microtime_last = $value;
         } else {
-            $server_timing[] = $key.';dur='.$value.';desc="'.$key.'"';
+            $server_timing[] = $key.';dur='.round($value,2).';desc="'.$key.'"';
         }
     }
         

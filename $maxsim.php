@@ -2,7 +2,7 @@
 
 maxsim:
 
-$maxsim['version'] = '0.5.11';
+$maxsim['version'] = '0.5.12';
 
 ob_start();
 
@@ -77,11 +77,11 @@ function maxsim_router() {
         maxsim_autoload($ls);
 
         foreach ($ls AS $file)
-            if (basename($file) === 'index.php' OR basename($file) === 'index.html')
+            if (basename($file) === 'index.php')
                 $maxsim['app'] = $file;
 
         foreach ($ls AS $file)
-            if (isset($levels[$id+1]) AND (basename($file) === $levels[$id+1].'.php' OR basename($file) === $levels[$id+1].'.html'))
+            if (isset($levels[$id+1]) AND basename($file) === $levels[$id+1].'.php')
                 $maxsim['app'] = $file;
     }
 }
@@ -110,7 +110,7 @@ function maxsim_get() {
     
     $url = explode('?', $_SERVER['REQUEST_URI'])[0];
     
-    if (substr($maxsim['app'],-9) === 'index.php' OR substr($maxsim['app'],-9) === 'index.html')
+    if (substr($maxsim['app'],-9) === 'index.php')
         $url = '/index'.$url;
 
     $id = 0;

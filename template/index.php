@@ -8,7 +8,12 @@
 
 <meta name="description" content="<?=$maxsim['template']['description']?>" />
 
+<link rel="icon" href="data:,">
+
 <?php
+
+echo $maxsim['template']['head'];
+
 
 foreach ((array)$maxsim['autoload'] AS $file)
 	if (substr($file,-4)==='.css')

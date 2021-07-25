@@ -1,0 +1,64 @@
+#maxsim_ide {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 66%;
+    height:100%;
+    background-color:#000;
+
+    box-shadow: 0 10px 20px 0 rgb(0 0 0 / 20%), 0 10px 20px 0 rgb(0 0 0 / 20%) !important;
+
+}
+
+
+
+#maxsim_ide_menu {
+    display: inline-block;
+    position: fixed;
+    width:20px;
+    height:100%;
+    background-color:#444;
+    font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+    
+    writing-mode: tb-rl;
+    transform: rotate(-180deg);
+}
+
+#maxsim_ide_menu a {
+    color:#BBB;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+
+
+#maxsim_ide_tree {
+    display: inline-block;
+    color:#FFF;
+    background-color:#555;
+    font-family: sans-serif;
+    width:200px;
+    margin-left:20px;
+    font-size: 14px;
+    height:100%;
+}
+
+.maxsim_ide_tree_item {
+    margin:0;
+    padding:2px 8px;
+    cursor:pointer;
+}
+
+.maxsim_ide_tree_item_selected {
+    background-color: #094771;
+}
+
+
+
+#maxsim_ide_editor { 
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    margin-left: 220px;
+}

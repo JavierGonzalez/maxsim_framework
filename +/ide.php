@@ -1,3 +1,3 @@
 <?php
 
-include('ide/injection.php');
+include('maxsim/ide/injection.php');

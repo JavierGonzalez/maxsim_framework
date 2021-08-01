@@ -2,17 +2,17 @@
 <html>
 <head>
 
-<title><?=$maxsim['template']['title']?></title>
+<title><?=@$maxsim['template']['title']?></title>
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
-<meta name="description" content="<?=$maxsim['template']['description']?>" />
+<meta name="description" content="<?=@$maxsim['template']['description']?>" />
 
 <link rel="icon" href="data:,">
 
 <?php
 
-echo $maxsim['template']['head'];
+echo @$maxsim['template']['head'];
 
 
 foreach ((array)$maxsim['autoload'] AS $file)
@@ -21,7 +21,7 @@ foreach ((array)$maxsim['autoload'] AS $file)
 
 echo '
 <style type="text/css">
-'.$maxsim['template']['css'].'
+'.@$maxsim['template']['css'].'
 </style>';
 
 ?>
@@ -52,7 +52,7 @@ foreach ((array)$maxsim['template']['js_array'] AS $key => $value)
 
     <div id="top_right">
         
-        <?=$maxsim['template']['top_right']?> 
+        <?=@$maxsim['template']['top_right']?> 
         
         <span id="print_login"></span>
 
@@ -61,7 +61,7 @@ foreach ((array)$maxsim['template']['js_array'] AS $key => $value)
 
 	<div id="content">
     
-	    <?=$echo?>
+	    <?=@$echo?>
 
 	</div>
 
@@ -82,7 +82,7 @@ foreach ((array)$maxsim['autoload'] AS $file)
 ?>
 
 <script type="text/javascript">
-<?=$maxsim['template']['js']?>
+<?=@$maxsim['template']['js']?>
 </script>
 
 </body>

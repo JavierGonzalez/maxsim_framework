@@ -10,7 +10,7 @@ function ___($echo='', $echo2=false, $scroll_down=false) {
     $microtime = $maxsim['debug']['crono'];
 
     echo '<br />'."\n";
-    echo ++$maxsim['debug']['count'].'. &nbsp; <span title="'.date('Y-m-d H:i:s').'">'.implode(' &nbsp; ', profiler($microtime)).'</span> &nbsp; ';
+    echo @++$maxsim['debug']['count'].'. &nbsp; <span title="'.date('Y-m-d H:i:s').'">'.implode(' &nbsp; ', profiler($microtime)).'</span> &nbsp; ';
 
     if (is_array($echo2)) {
         echo $echo;
@@ -50,10 +50,10 @@ function profiler($microtime=false) {
 
     $output[] = number_format((microtime(true)-$microtime)*1000,2).' ms';
     
-    if (is_numeric($__sql['count']))
+    if (is_numeric(@$__sql['count']))
         $output[] = number_format($__sql['count']).' sql';
     
-    if (is_numeric($__rpc['count']))
+    if (is_numeric(@$__rpc['count']))
         $output[] = number_format($__rpc['count']).' rpc';
 
     $output[] = number_format(memory_get_usage(false)/1024).' kb';
@@ -66,6 +66,7 @@ function profiler($microtime=false) {
 function maxsim_timing() {
     global $maxsim;
     
+
     if (isset($maxsim['debug']['timing']['app']))
         $maxsim['debug']['timing']['template'] = microtime(true);
     else
@@ -74,17 +75,33 @@ function maxsim_timing() {
     
     $microtime_last = $_SERVER['REQUEST_TIME_FLOAT'];
     
+    $debug_log_target = ['time' => time()];
+
+    $id = 0;
     foreach ((array) $maxsim['debug']['timing'] AS $key => $value) { 
         if ($value > 1000000000) {
-            $server_timing[] = ++$id.';dur='.round(($value-$microtime_last)*1000, 3).';desc="'.$key.'"';
+            $debug_log_target[$key] = round(($value-$microtime_last)*1000, 2);
+            $server_timing[] = ++$id.';dur='.$debug_log_target[$key].';desc="'.$key.'"';
             $microtime_last = $value;
         } else {
-            $server_timing[] = $key.';dur='.round($value,2).';desc="'.$key.'"';
+            $debug_log_target[$key] = round($value,2);
+            $server_timing[] = $key.';dur='.$debug_log_target[$key].';desc="'.$key.'"';
         }
     }
-        
-    $server_timing[] = '99;desc="memory '.number_format(memory_get_usage(false)/1024).' kb"';
-    $server_timing[] = 'Total;dur='.round((microtime(true)-$_SERVER['REQUEST_TIME_FLOAT'])*1000, 3);
+
+    $debug_log_target['memory'] = number_format(memory_get_usage(false)/1024);
+    $debug_log_target['total'] = round((microtime(true)-$_SERVER['REQUEST_TIME_FLOAT'])*1000, 2);
+    
+    
+    $server_timing[] = '99;desc="memory '.$debug_log_target['memory'].' kb"';
+    $server_timing[] = 'Total;dur='.$debug_log_target['total'];
+    
+    $debug_log_target['url'] = $_SERVER['REQUEST_URI'];
+    
+    if (http_response_code() === 200) {
+        chdir($_SERVER['DOCUMENT_ROOT']); // Working directory of the script can change inside the shutdown function under some web servers, e.g. Apache.
+        file_put_contents('maxsim/ide/log_app/'.str_replace('/', '|', $maxsim['app']).'.log', json_encode($debug_log_target)."\n", FILE_APPEND);
+    }
 
     header('server-timing: '.implode(', ', (array)$server_timing));
 }

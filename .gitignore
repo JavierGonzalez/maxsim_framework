@@ -1,2 +1,5 @@
 *password*.php
 *password*.ini
+*.log
+maxsim/.htaccess
+leonardo/*

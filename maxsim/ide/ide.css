@@ -8,8 +8,22 @@
 
     box-shadow: 0 10px 20px 0 rgb(0 0 0 / 20%), 0 10px 20px 0 rgb(0 0 0 / 20%) !important;
 
+    /*
+    resize: horizontal;
+    overflow: hidden;
+    transform: rotate(180deg);
+    */
+
 }
 
+#maxsim_ide_graph {
+    position: absolute;
+    bottom:0;
+    
+    width:2000px;
+    height:30%;
+    margin-left:-2000px;
+}
 
 
 #maxsim_ide_menu {
@@ -17,7 +31,7 @@
     position: fixed;
     width:20px;
     height:100%;
-    background-color:#444;
+    background-color:#666;
     font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
     
     writing-mode: tb-rl;

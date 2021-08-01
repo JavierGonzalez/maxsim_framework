@@ -1,6 +1,6 @@
 <?php
 
-asdasdasd
+echo 'api post ok';
 
 
 exit;

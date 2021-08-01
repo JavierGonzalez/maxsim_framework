@@ -3,9 +3,8 @@
 
 $maxsim['template']['js_array']['maxsim_ide_dir'] = str_replace($_SERVER['DOCUMENT_ROOT'], '', __DIR__).'/';
 $maxsim['template']['js_array']['maxsim_ide_target'] = $maxsim['app'];
-$maxsim['template']['js_array']['maxsim_version'] = $maxsim['version'];
 
-$maxsim['template']['js'] .= '
+@$maxsim['template']['js'] .= '
 
 document.querySelector("body").addEventListener("keydown", function(e) {
     if (/*e.ctrlKey && */e.keyCode == 27 && typeof ace == "undefined") {

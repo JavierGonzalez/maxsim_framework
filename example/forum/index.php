@@ -2,6 +2,6 @@
 
 echo 'Forum index';
 
-__($_GET);
+___($_GET);
 
-__($maxsim);
+___($maxsim);

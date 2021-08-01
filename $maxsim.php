@@ -53,7 +53,7 @@ else if (isset($maxsim['output']) AND $maxsim['output'] === 'json' AND is_array(
 
     if ($echo === '') {
         http_response_code(404);
-        $echo = (is_string($maxsim['template'][404])?$maxsim['template'][404]:'Error 404: NOT FOUND.');
+        $echo = (isset($maxsim['template'][404])?$maxsim['template'][404]:'Error 404: NOT FOUND.');
     }
     
     include($maxsim['output'].'/index.php');

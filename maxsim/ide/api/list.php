@@ -9,18 +9,16 @@ $target_path[] = '';
 if (isset($_GET['target'])) {
     $target_path = array_merge($target_path, array_filter(explode('/', $_GET['target'])));
 
-    foreach ($target_path AS $key => $value)
-        if ($value)    
-            $target_path[$key] .= '/';
-
     if (substr($_GET['target'], -1, 1) != '/')
         array_pop($target_path);
 }
 
-// $ls = glob('{,.}[!.,!..]*', GLOB_MARK | GLOB_BRACE);
-
-foreach ($target_path AS $value)
-    $ls = array_merge((array)$ls, glob($value.'*', GLOB_MARK | GLOB_BRACE));
+$value_path = [];
+foreach ($target_path AS $value) {
+    if ($value)
+        $value_path[] = $value;
+    $ls = array_merge((array)$ls, glob(($value?implode('/', (array)$value_path).'/*':'{,.}[!.,!..]*'), GLOB_MARK | GLOB_BRACE));
+}
 
 
 natcasesort($ls);
@@ -29,10 +27,10 @@ foreach ($ls AS $item) {
     
     $type = (is_dir($item)?'dir':'file');
 
-    $tree[$type][] = array_filter([
+    $tree[(fnmatch('*\/*',$item)?'dir':$type)][] = array_filter([
         'name' => $item,
         'type' => $type,
-        'logs' => ($type=='file' && file_exists('maxsim/ide/log_app/'.str_replace('/', '|', $item).'.log')?true:null),
+        'logs' => ($type=='file' && file_exists('maxsim/logs/app/'.str_replace('/', '|', $item).'.log')?true:null),
     ]);
 }
 

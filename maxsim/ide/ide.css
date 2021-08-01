@@ -4,7 +4,7 @@
     right: 0;
     width: 66%;
     height:100%;
-    background-color:#000;
+    background-color:#111;
 
     box-shadow: 0 10px 20px 0 rgb(0 0 0 / 20%), 0 10px 20px 0 rgb(0 0 0 / 20%) !important;
 
@@ -13,7 +13,6 @@
     overflow: hidden;
     transform: rotate(180deg);
     */
-
 }
 
 #maxsim_ide_graph {
@@ -31,7 +30,7 @@
     position: fixed;
     width:20px;
     height:100%;
-    background-color:#666;
+    background-color:#555;
     font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
     
     writing-mode: tb-rl;
@@ -49,7 +48,7 @@
 #maxsim_ide_tree {
     display: inline-block;
     color:#FFF;
-    background-color:#555;
+    background-color:#444;
     font-family: sans-serif;
     width:200px;
     margin-left:20px;
@@ -61,6 +60,8 @@
     margin:0;
     padding:2px 8px;
     cursor:pointer;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .maxsim_ide_tree_item_selected {
@@ -70,9 +71,10 @@
 
 
 #maxsim_ide_editor { 
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    width: 100%;
+    position: absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
     margin-left: 220px;
 }

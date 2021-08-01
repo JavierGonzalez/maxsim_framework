@@ -4,20 +4,24 @@
 // JS
 import "./vendor/jquery/jquery-3.5.0.min.js";
 import "./vendor/jquery/jquery-ui.min.js";
-import "./vendor/ace/ace.js";
 import "./vendor/lightweight-charts.standalone.production.js";
+
+$('head').append('<script>var require = { paths: { "vs": "/maxsim/ide/vendor/monaco-editor/vs" } };</script>');
+$('head').append('<script src="/maxsim/ide/vendor/monaco-editor/vs/loader.js"></script>');
+
 
 // CSS
 $('head').append('<link rel="stylesheet" type="text/css" href="' + maxsim_ide_dir + 'ide.css">');
 $('head').append('<link rel="stylesheet" type="text/css" href="' + maxsim_ide_dir + 'vendor/jquery/jquery-ui.min.css">');
 
+
 // HTML
-$("body").append('<div id="maxsim_ide"><div id="maxsim_ide_graph"></div><div id="maxsim_ide_menu"></div><div id="maxsim_ide_tree"></div><div id="maxsim_ide_editor"></div></div>');
+$("body").append('<div id="maxsim_ide" style="display:none;"><div id="maxsim_ide_graph"></div><div id="maxsim_ide_menu"></div><div id="maxsim_ide_tree"></div><div id="maxsim_ide_editor"></div></div>');
 $("#maxsim_ide_menu").html('<span><a href="https://maxsim.tech" target="_blank">maxsim</a></span>');
 
 
 
-var maxsim_ide_ace = [];
+var maxsim_monaco_editor = null;
 
 maxsim_ide_load_file();
 
@@ -28,11 +32,11 @@ maxsim_ide_load_file();
 $("body").on("keydown", function(e) {
     if (e.keyCode == 27) {
         $("#maxsim_ide").toggle();
-        maxsim_ide_ace.focus();
+        maxsim_monaco_editor.focus();
         e.preventDefault();
     } else if (e.keyCode == 83 && e.ctrlKey && $("#maxsim_ide").is(":visible") == true) {
         $("#maxsim_ide").toggle();
-        $.post(maxsim_ide_dir + "api/write?file=" + encodeURIComponent(maxsim_ide_target), { code: maxsim_ide_ace.getValue() }, function(data){
+        $.post(maxsim_ide_dir + "api/write?file=" + encodeURIComponent(maxsim_ide_target), { code: maxsim_monaco_editor.getValue() }, function(data){
             location.reload();
         });
         e.preventDefault();
@@ -52,48 +56,55 @@ function maxsim_ide_load_file() {
     });
 }
 
-
 function maxsim_ide_editor(data) {
 
-    if (maxsim_ide_ace == '') {
-        $("#maxsim_ide_editor").text(data);
+    require(['vs/editor/editor.main'], function () {
+            
+        if (!maxsim_monaco_editor) {
+            maxsim_monaco_editor = monaco.editor.create(document.getElementById('maxsim_ide_editor'), {
+                model: null
+            });
+        }
         
-        maxsim_ide_ace = ace.edit("maxsim_ide_editor");
-        ace.config.set("basePath", maxsim_ide_dir + "vendor/ace");
-        maxsim_ide_ace.setTheme("ace/theme/monokai");
-        maxsim_ide_ace.session.setMode("ace/mode/php");
-        maxsim_ide_ace.focus();
-        maxsim_ide_ace.navigateFileEnd();
-        maxsim_ide_ace.setShowPrintMargin(false);
-        maxsim_ide_ace.setOption("fixedWidthGutter", true);
-        maxsim_ide_ace.setOption("foldStyle", "manual");
-        
-        $("#maxsim_ide").resizable({ 
-            handles: "w", 
-            minWidth: 80, 
-            maxWidth: $(window).width()
-        });
-        $(".ui-resizable-handle.ui-resizable-w").css("width", 20).css("height", "90%");
-        
+        var file_extension = maxsim_ide_target.split('.').pop();
+        var extension_whitelist = new Array('php', 'html', 'css', 'js', 'ts', 'txt', 'md', 'ini', 'py', 'dockerfile', 'xml', 'yaml', 'sql');
+        if (extension_whitelist.indexOf(file_extension) == -1)
+            var file_extension = 'text';
 
-        maxsim_ide_tree(maxsim_ide_target);
-        
-    } else {
-        maxsim_ide_ace.setValue(data);
-        maxsim_ide_ace.clearSelection();
-        maxsim_ide_ace.focus();
-    }
+        var newModel = monaco.editor.createModel(data, file_extension);
+        maxsim_monaco_editor.setModel(newModel);
+        monaco.editor.setTheme('vs-dark');
+
+        maxsim_monaco_editor.focus();
+    });
     
+    $("#maxsim_ide").on('resize', function(){
+        maxsim_monaco_editor.layout();
+    });
+
+    $("#maxsim_ide").resizable({ 
+        handles: "w", 
+        minWidth: 80, 
+        maxWidth: $(window).width(),
+        alsoResize: '#maxsim_ide_editor',
+    });
+    $(".ui-resizable-handle.ui-resizable-w").css("width", 20).css("height", "90%");
+
+    maxsim_ide_tree(maxsim_ide_target);
+    
+    $('#maxsim_ide').show();
 }
 
 
 function maxsim_ide_tree(item) {
     
-    $("#maxsim_ide_tree").html('');
+    var dir_last = ' ';
 
     $.get(maxsim_ide_dir + "api/list?target=" + encodeURIComponent(item), function(data){
+        
+        $("#maxsim_ide_tree").html('');
 
-        data['tree'].forEach(function(i) {
+        data['tree'].forEach(function(i,k,a) {
             
             if (i['type'] == 'dir') {
                 var icon = 'default_folder.svg';
@@ -103,8 +114,29 @@ function maxsim_ide_tree(item) {
                 var icon = 'empty.svg';
             }
 
-            $("#maxsim_ide_tree").append('<div class="maxsim_ide_tree_item" data-item="' + i['name'] + '" data-type="' + i['type'] + '"><img src="maxsim/ide/vendor/icons/' + icon + '" width="16" /> ' + i['name'] + '</div>');
+            var name = i['name'];
+
+            var tab_num = (name.split('/').length - 2);
+            if (i['type'] == 'file')
+                tab_num++;
+            var tab = '&nbsp;&nbsp;&nbsp; '.repeat(tab_num);
+
+            if (i['type'] == 'dir') {
+                var name = name.substr(0, name.length - 1);
+                
+                if (name.substr(0, dir_last.length) == dir_last) {
+                    var name = name.substr(dir_last.length);
+                    $('.maxsim_ide_tree_item[data-item="' + dir_last + '"] img').attr('src', '/maxsim/ide/vendor/icons/default_folder_opened.svg');
+                } else {
+                    dir_last = name;
+                }
+            } else {
+                var name = name.split('/').reverse()[0];
+            }
+
+            $("#maxsim_ide_tree").append('<div class="maxsim_ide_tree_item" data-item="' + i['name'] + '" data-type="' + i['type'] + '">' + tab + '<img src="/maxsim/ide/vendor/icons/' + icon + '" width="16" height="16" /> ' + name + '</div>');
         });
+
     
         $('.maxsim_ide_tree_item[data-item="' + maxsim_ide_target + '"]').addClass('maxsim_ide_tree_item_selected');
     
@@ -122,7 +154,6 @@ function maxsim_ide_tree(item) {
             } else {
                 maxsim_ide_tree(item_this);
             }
-
         });
 
     });
@@ -200,6 +231,6 @@ function maxsim_ide_graph() {
         
             n++;
         }
-        
     });
 }
+

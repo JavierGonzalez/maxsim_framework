@@ -89,12 +89,12 @@ function maxsim_timing() {
         }
     }
 
-    $debug_log_target['memory'] = number_format(memory_get_usage(false)/1024);
-    $debug_log_target['total'] = round((microtime(true)-$_SERVER['REQUEST_TIME_FLOAT'])*1000, 2);
+    $debug_log_target['RAM'] = number_format(memory_get_usage(false)/1024);
+    $debug_log_target['TOTAL'] = round((microtime(true)-$_SERVER['REQUEST_TIME_FLOAT'])*1000, 2);
     
     
-    $server_timing[] = '99;desc="memory '.$debug_log_target['memory'].' kb"';
-    $server_timing[] = 'Total;dur='.$debug_log_target['total'];
+    $server_timing[] = '99;desc="RAM '.$debug_log_target['RAM'].' kb"';
+    $server_timing[] = 'TOTAL;dur='.$debug_log_target['TOTAL'];
     
     $debug_log_target['url'] = $_SERVER['REQUEST_URI'];
     

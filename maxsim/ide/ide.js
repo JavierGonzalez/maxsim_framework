@@ -62,14 +62,35 @@ function maxsim_ide_editor(data) {
             
         if (!maxsim_monaco_editor) {
             maxsim_monaco_editor = monaco.editor.create(document.getElementById('maxsim_ide_editor'), {
-                model: null
+                model: null,
+                minimap: {
+                    renderCharacters: false,
+                    showSlider: 'always',
+                },
             });
         }
         
         var file_extension = maxsim_ide_target.split('.').pop();
-        var extension_whitelist = new Array('php', 'html', 'css', 'js', 'ts', 'txt', 'md', 'ini', 'py', 'dockerfile', 'xml', 'yaml', 'sql');
-        if (extension_whitelist.indexOf(file_extension) == -1)
+        var extension_map = {
+                php:    'php',
+                js:     'javascript',
+                html:   'html',
+                css:    'css',
+                ts:     'typescript',
+                txt:    'text',
+                md:     'markdown',
+                ini:    'ini',
+                dokerfile: 'dokerfile',
+                xml:     'xml',
+                yaml:    'yaml',
+                sql:     'sql',
+            };
+        
+        if (typeof extension_map[file_extension] !== 'undefined')
+            var file_extension = extension_map[file_extension];
+        else
             var file_extension = 'text';
+
 
         var newModel = monaco.editor.createModel(data, file_extension);
         maxsim_monaco_editor.setModel(newModel);

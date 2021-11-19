@@ -2,7 +2,7 @@
 
 maxsim:
 
-$maxsim['version'] = '0.5.12';
+$maxsim['version'] = '0.5.13';
 
 ob_start();
 
@@ -77,7 +77,7 @@ function maxsim_router() {
         maxsim_autoload($ls);
 
         foreach ($ls AS $file)
-            if (basename($file) === 'index.php')
+            if (in_array(basename($file), ['index.php', 'index.html']))
                 $maxsim['app'] = $file;
 
         foreach ($ls AS $file)

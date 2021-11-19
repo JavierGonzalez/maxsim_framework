@@ -3,7 +3,7 @@
 Maximum Simplicity framework
 
 ### Features
-* 124 µs.
+* 66 µs  `15k request per second`.
 * Simple.
 * Modular.
 * Filesystem-based routing.
@@ -30,7 +30,7 @@ Maximum Simplicity framework
 * Framework app url redirection with: `$maxsim['redirect'] = '/url';`
 * Text-plain output with: `exit;` or `$maxsim['output'] = 'text';`
 * JSON API output when `$echo` is array and `$maxsim['output'] = 'json';`.
-* Performance tested with: `ab -n 10000 -c 100 http://localhost:80/hello_world` (1 route, 8 cores, HDD)
+* Performance tested with: `ab -n 50000 -c 32 http://localhost:80/hello_world` (1 route, 12 cores, HDD)
 * Simple, short, lightweight, snake_case, procedural first, flexible, expansible, old school.
 
 

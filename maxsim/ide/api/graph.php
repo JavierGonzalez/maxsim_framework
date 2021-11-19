@@ -5,7 +5,7 @@ $maxsim['output'] = 'json';
 
 $echo = [];
 
-$file = 'maxsim/logs/app/'.str_replace('/', '|', $_GET['file']).'.log';
+$file = 'maxsim/log/app/'.str_replace('/', '|', $_GET['file']).'.log';
 
 if ($file AND file_exists($file)) 
     foreach (explode("\n", file_get_contents($file)) AS $line)

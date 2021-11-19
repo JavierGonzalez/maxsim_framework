@@ -22,4 +22,7 @@ ___('<xmp style="background:#EEE;padding:4px;">'.json_encode(SQL_SCHEME, JSON_PR
 // ___(sql("SHOW TABLES"));
 
 
+phpinfo();
+
+
 //exit;

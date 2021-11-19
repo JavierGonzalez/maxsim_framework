@@ -98,9 +98,9 @@ function maxsim_timing() {
     
     $debug_log_target['url'] = $_SERVER['REQUEST_URI'];
     
-    if (http_response_code() === 200) {
-        chdir($_SERVER['DOCUMENT_ROOT']); // Working directory of the script can change inside the shutdown function under some web servers, e.g. Apache.
-        file_put_contents('maxsim/logs/app/'.str_replace('/', '|', $maxsim['app']).'.log', json_encode($debug_log_target)."\n", FILE_APPEND);
+    if (true AND http_response_code() === 200 AND file_exists('maxsim/log/app/') AND is_writable('maxsim/log/app/')) {
+        chdir($_SERVER['DOCUMENT_ROOT']); // Working directory of the script can change inside the shutdown function under some web servers, e.g. Apache.    
+        file_put_contents('maxsim/log/app/'.str_replace('/', '|', $maxsim['app']).'.log', json_encode($debug_log_target)."\n", FILE_APPEND);
     }
 
     header('server-timing: '.implode(', ', (array)$server_timing));

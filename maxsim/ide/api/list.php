@@ -30,7 +30,7 @@ foreach ($ls AS $item) {
     $tree[(fnmatch('*\/*',$item)?'dir':$type)][] = array_filter([
         'name' => $item,
         'type' => $type,
-        'logs' => ($type=='file' && file_exists('maxsim/logs/app/'.str_replace('/', '|', $item).'.log')?true:null),
+        'logs' => ($type=='file' && file_exists('maxsim/log/app/'.str_replace('/', '|', $item).'.log')?true:null),
     ]);
 }
 

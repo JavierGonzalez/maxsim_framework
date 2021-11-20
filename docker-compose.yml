@@ -1,9 +1,8 @@
 web:
   container_name: maxsim
-  build: maxsim/docker/
-  ports:
-    - "80:80"
-    - "443:443"
+  build: maxsim/docker/  
   volumes:
     - .:/var/www/html
     - ./maxsim/log:/var/log/apache2
+  labels:
+    - "traefik.http.routers.maxsim.rule=Host(`maxsim.localhost`)"

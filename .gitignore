@@ -1,4 +1,5 @@
 *password*.php
 *password*.ini
+*password*.env
 *.log
 lab/*

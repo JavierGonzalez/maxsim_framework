@@ -1,6 +1,6 @@
 web:
   container_name: maxsim
-  build: maxsim/docker/  
+  build: maxsim/docker/    
   volumes:
     - .:/var/www/html
     - ./maxsim/log:/var/log/apache2

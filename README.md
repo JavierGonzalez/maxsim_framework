@@ -4,14 +4,14 @@ Maximum Simplicity framework
 
 
 ### Features
-* 55 µs  `18k request per second`.
-* Simple `123-line single-file framework kernel`.
-* Modular.
+* 54 µs  `18k request per second`.
+* Simple, modular.
 * FileSystem-based routing.
 * Hello World in one line.
 * Autoload files with prefix `+` and suffix `.php .js .css .ini .json`.
 * Autoload files inside a directory with prefix `+`, recursively.
 * Template selection with: `$maxsim['output'] = 'template';`
+* 123-line single-file framework kernel.
 
 
 ### To know
@@ -30,7 +30,7 @@ Maximum Simplicity framework
 * Framework app url redirection with: `$maxsim['redirect'] = '/url';`.
 * Text-plain output with: `exit;` or `$maxsim['output'] = 'text';`.
 * JSON output when `$echo` is array and `$maxsim['output'] = 'json';`.
-* Performance tested with: `ab -n 50000 -c 32 http://localhost:80/hello_world` (1 route, no autoload, Alpine docker, php8, 9 MB RAM, 12 cores, HDD).
+* Performance tested with: `ab -n 50000 -c 32 http://localhost:80/hello_world` (1 route, without autoload, Alpine docker, PHP 8.1, 10MB RAM, 12 cores, HDD).
 * Simple, short, ultra-fast, lightweight, modular, procedural first, snake_case, disruptive.
 
 
@@ -43,11 +43,11 @@ Maximum Simplicity framework
 
 
 ### Tested environment
-* PHP 8.0
+* PHP 8.1
 * Alpine Linux docker
 * CentOS 7.8 x86_64
-* Apache
-* MySQL, MariaDB, SQLite3
+* Apache (with mod_rewrite)
+* MySQL, MariaDB
 
 ### Used in
 - **[POL](https://github.com/JavierGonzalez/POL)** A democratic voting community.

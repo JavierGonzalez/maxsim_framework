@@ -1,12 +1,12 @@
-FROM php:8.0-apache	
+FROM php:8.1-apache	
 # https://github.com/docker-library/php
 
 RUN a2enmod rewrite
 
 RUN docker-php-ext-install mysqli gettext
 
-RUN apt update 
-RUN apt install sqlite3 libsqlite3-mod-impexp libsqlite3-mod-csvtable
+# RUN apt update 
+# RUN apt install sqlite3
 
 COPY apache.conf /etc/apache2/sites-enabled/localhost.conf
 COPY php.ini /usr/local/etc/php/conf.d/php.ini

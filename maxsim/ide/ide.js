@@ -10,6 +10,7 @@ $('head').append('<script>var require = { paths: { "vs": "/maxsim/ide/vendor/mon
 $('head').append('<script src="/maxsim/ide/vendor/monaco-editor/vs/loader.js"></script>');
 
 
+
 // CSS
 $('head').append('<link rel="stylesheet" type="text/css" href="' + maxsim_ide_dir + 'ide.css">');
 $('head').append('<link rel="stylesheet" type="text/css" href="' + maxsim_ide_dir + 'vendor/jquery/jquery-ui.min.css">');
@@ -17,7 +18,7 @@ $('head').append('<link rel="stylesheet" type="text/css" href="' + maxsim_ide_di
 
 // HTML
 $("body").append('<div id="maxsim_ide" style="display:none;"><div id="maxsim_ide_graph"></div><div id="maxsim_ide_menu"></div><div id="maxsim_ide_tree"></div><div id="maxsim_ide_editor"></div></div>');
-$("#maxsim_ide_menu").html('<span><a href="https://maxsim.tech" target="_blank">maxsim</a></span>');
+$("#maxsim_ide_menu").append('<a href="https://maxsim.tech" target="_blank">maxsim</a> <a href="#">Config</a> <a href="#">SSH</a> <a href="#">SQL</a> <a href="#">Debug</a> <a href="#">Stats</a>');
 
 
 
@@ -232,7 +233,7 @@ function maxsim_ide_graph() {
             }
         });
 
-        var graph_data_color = ['yellow', 'green', 'blue', 'purple', 'brown', 'orange', 'red', 'black'];
+        var graph_data_color = ['yellow', 'green', 'blue', 'purple', 'brown', 'orange', 'red', 'black', 'pink'];
         var n = 0;
         for(var k in data[0]) {
 

@@ -2,5 +2,4 @@
 *password*.ini
 *password*.env
 *.log
-*.db
 lab/*

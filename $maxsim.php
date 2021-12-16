@@ -1,11 +1,10 @@
-<?php # maxsim.tech — MIT License — Copyright (c) 2005 Javier González González <gonzo@virtualpol.com>
+<?php # MIT License — Copyright (c) 2005  Javier González González  maxsim.tech
 
 maxsim:
 
-$maxsim['version'] = '0.5.13';
+$maxsim['version'] = '0.5.14';
 
 ob_start();
-
 maxsim_router();
 maxsim_get();
 $maxsim['debug']['timing']['router'] = microtime(true);
@@ -28,7 +27,8 @@ foreach ((array) $maxsim['autoload'] AS $file) {
 $maxsim['debug']['timing']['autoload'] = microtime(true);
 
 
-include_once($maxsim['app']); #
+if (is_string($maxsim['app']))
+    include_once($maxsim['app']);
 $maxsim['debug']['timing']['app'] = microtime(true);
 
 
@@ -38,24 +38,20 @@ if (isset($maxsim['redirect'])) {
     goto maxsim;
 }
 
+if (!isset($maxsim['output']))
+    $maxsim['output'] = 'template';
 
-if (isset($maxsim['output']) AND $maxsim['output'] === 'text')
+if ($maxsim['output'] === 'text') {
     header('content-type: text/plain');
 
-else if (isset($maxsim['output']) AND $maxsim['output'] === 'json' AND is_array($echo)) {
+} else if ($maxsim['output'] === 'json' AND is_array($echo)) {
     ob_end_clean();
     header('content-type: application/json');
     echo json_encode((array)$echo, JSON_PRETTY_PRINT);
 
-} else if (isset($maxsim['output']) AND file_exists($maxsim['output'].'/index.php')) {
+} else if (file_exists($maxsim['output'].'/index.php')) {
     $echo = ob_get_contents();
     ob_end_clean();
-
-    if ($echo === '') {
-        http_response_code(404);
-        $echo = (isset($maxsim['template'][404])?$maxsim['template'][404]:'Error 404: NOT FOUND.');
-    }
-    
     include($maxsim['output'].'/index.php');
 }
 
@@ -64,6 +60,7 @@ exit;
 
 function maxsim_router() {
     global $maxsim;
+    $maxsim['app'] = false;
 
     $levels = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
 
@@ -118,6 +115,9 @@ function maxsim_get() {
         if ($level-$app_level > 0)
             $_GET[$id++] = $value;
 }
+
+
+
 
 
  

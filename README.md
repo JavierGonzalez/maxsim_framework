@@ -4,10 +4,10 @@ Maximum Simplicity framework
 
 
 ### Features
-* 54 µs  `18k request per second`.
-* Simple, modular.
-* FileSystem-based routing.
+* 48 µs  `20k request per second`.
+* Simple, fast, modular.
 * Hello World in one line.
+* FileSystem-based routing.
 * Autoload files with prefix `+` and suffix `.php .js .css .ini .json`.
 * Autoload files inside a directory with prefix `+`, recursively.
 * Template selection with: `$maxsim['output'] = 'template';`
@@ -30,8 +30,8 @@ Maximum Simplicity framework
 * Framework app url redirection with: `$maxsim['redirect'] = '/url';`.
 * Text-plain output with: `exit;` or `$maxsim['output'] = 'text';`.
 * JSON output when `$echo` is array and `$maxsim['output'] = 'json';`.
-* Performance tested with: `ab -n 50000 -c 32 http://localhost:80/hello_world` (1 route, without autoload, Alpine docker, PHP 8.1, 10MB RAM, 12 cores, HDD).
-* Simple, short, ultra-fast, lightweight, modular, procedural first, snake_case, disruptive.
+* Performance tested with: `ab -n 50000 -c 32 http://localhost:80/hello_world` (minimal branch, 1 route, 1 template, Alpine docker, PHP 8.1, 8MB RAM).
+* Simple, short, light, fast, modular, procedural first, snake_case.
 
 
 ### Future features
@@ -43,7 +43,7 @@ Maximum Simplicity framework
 
 
 ### Tested environment
-* PHP 8.1
+* PHP >7.4
 * Alpine Linux docker
 * CentOS 7.8 x86_64
 * Apache (with mod_rewrite)

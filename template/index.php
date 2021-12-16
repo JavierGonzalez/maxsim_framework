@@ -2,37 +2,34 @@
 <html>
 <head>
 
-<title><?=@$maxsim['template']['title']?></title>
+<title><?=(isset($maxsim['template']['title'])?$maxsim['template']['title']:ucfirst(str_replace('_', ' ', basename($maxsim['app'] ?? '', '.php'))))?></title>
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
-<meta name="description" content="<?=@$maxsim['template']['description']?>" />
+<meta name="description" content="<?=$maxsim['template']['description'] ?? null?>" />
 
 <link rel="icon" href="data:,">
 
 <?php
 
-echo @$maxsim['template']['head'];
+echo $maxsim['template']['head'] ?? null;
 
-
-foreach ((array)$maxsim['autoload'] AS $file)
-	if (substr($file,-4)==='.css')
+foreach ($maxsim['autoload'] ?? [] AS $file)
+	if (substr($file,-4) === '.css')
 		echo '<link rel="stylesheet" enctype="text/css" href="/'.$file.'" media="all" />'."\n";
 
-echo '
-<style type="text/css">
-'.@$maxsim['template']['css'].'
-</style>';
+if (isset($maxsim['template']['css']))
+	echo '<style type="text/css">'.$maxsim['template']['css'].'</style>';
+
+
+if (isset($maxsim['template']['js_array'])) {
+	echo '<script type="text/javascript">';
+	foreach ($maxsim['template']['js_array'] AS $key => $value)
+		echo $key.' = "'.str_replace('"', '\"', $value).'";'."\n";
+	echo '</script>';
+}
 
 ?>
-
-
-<script type="text/javascript">
-<?php
-foreach ((array)$maxsim['template']['js_array'] AS $key => $value)
-    echo $key.' = "'.str_replace('"', '\"', $value).'";'."\n";
-?>
-</script>
 
 </head>
 
@@ -52,7 +49,7 @@ foreach ((array)$maxsim['template']['js_array'] AS $key => $value)
 
     <div id="top_right">
         
-        <?=@$maxsim['template']['top_right']?> 
+        <?=$maxsim['template']['top_right'] ?? null?> 
         
         <span id="print_login"></span>
 
@@ -61,7 +58,16 @@ foreach ((array)$maxsim['template']['js_array'] AS $key => $value)
 
 	<div id="content">
     
-	    <?=@$echo?>
+<?php
+
+if ($echo === '') {
+	http_response_code(404);
+	echo 'Error 404: NOT FOUND';
+} else {
+	echo $echo;
+}
+
+?>
 
 	</div>
 
@@ -76,13 +82,13 @@ foreach ((array)$maxsim['template']['js_array'] AS $key => $value)
 
 
 <?php
-foreach ((array)$maxsim['autoload'] AS $file)
+foreach ($maxsim['autoload'] ?? [] AS $file)
 	if (substr($file,-3)==='.js')
 		echo '<script type="module" src="/'.$file.'"></script>'."\n";
 ?>
 
 <script type="text/javascript">
-<?=@$maxsim['template']['js']?>
+<?=$maxsim['template']['js'] ?? null?>
 </script>
 
 </body>

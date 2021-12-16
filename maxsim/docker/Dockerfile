@@ -1,4 +1,4 @@
-FROM php:8.1-apache	
+FROM php:8.1-apache
 # https://github.com/docker-library/php
 
 RUN a2enmod rewrite

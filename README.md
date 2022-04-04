@@ -1,6 +1,6 @@
 # maxsim 0.5
 
-Maximum Simplicity framework
+Simplicity is the ultimate sophistication.
 
 
 ### Features
@@ -10,8 +10,8 @@ Maximum Simplicity framework
 * FileSystem-based routing.
 * Autoload files with prefix `+` and suffix `.php .js .css .ini .json`.
 * Autoload files inside a directory with prefix `+`, recursively.
-* Template selection with: `$maxsim['output'] = 'template';`
-* 123-line single-file framework kernel.
+* Template selector with: `$maxsim['output'] = 'template';`
+* 123-lines single-file framework kernel.
 
 
 ### To know

@@ -1,6 +1,6 @@
 # maxsim 0.5
 
-Simplicity is the ultimate sophistication.
+Maxsimum Simplicity is the Ultimate Sophistication.
 
 
 ### Features

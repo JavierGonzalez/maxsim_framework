@@ -1,4 +1,4 @@
-### maxsim #####################################
+#################### maxsim ####################
 
 DirectorySlash Off
 
@@ -8,9 +8,14 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule .* /$maxsim.php [L]
 
-<FilesMatch "(password)">
+<FilesMatch "(.php|password)">
  Order Allow,Deny
  Deny from all
 </FilesMatch>
+
+<Files $maxsim.php>
+ Order Allow,Deny
+ Allow from all
+</Files>
 
 ################################################

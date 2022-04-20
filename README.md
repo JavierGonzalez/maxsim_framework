@@ -43,7 +43,7 @@ Simplicity is the Maximum Sophistication.
 
 
 ### Tested environment
-* PHP >7.4
+* PHP >8.1
 * Alpine Linux docker
 * CentOS 7.8 x86_64
 * Apache (with mod_rewrite)

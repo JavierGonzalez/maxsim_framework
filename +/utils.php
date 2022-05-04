@@ -28,3 +28,18 @@ function injection_filter($danger_input) {
         $output = stripslashes($output);
     return $output;
 }
+
+
+function num($number, $decimals=0) { 
+
+    if (!is_numeric($number))
+        return '';
+
+    return number_format((float)$number, $decimals, '.', ',');
+}
+
+
+function text_to_title($title) {
+    $title = str_replace(['-', '_', '/'], ' ', $title);
+    return ucfirst(trim($title));
+}

@@ -14,27 +14,25 @@ function ___($echo='', $echo2=false, $scroll_down=false) {
 
     if (is_array($echo2)) {
         echo $echo;
-        echo '<xmp style="background:#EEE;padding:4px;">'.print_r($echo2, true).'</xmp>';
+        echo '<xmp class="box p-3">'.print_r($echo2, true).'</xmp>';
     } else if (is_string($echo)) {
         echo $echo;
     } else if (is_array($echo) OR is_object($echo)) {
-        echo '<xmp style="background:#EEE;padding:4px;">'.print_r($echo, true).'</xmp>';
+        echo '<xmp class="box p-3">'.print_r($echo, true).'</xmp>';
     } else {
         var_dump($echo);
     }
 
     if ($scroll_down) {
         if ($maxsim['debug']['count']==1) {
-            if (function_exists('apache_setenv')) {
+            if (function_exists('apache_setenv'))
                 @apache_setenv('no-gzip', 1);
-            }
 
             ob_end_flush();
             echo '<script>function __sd() { window.scrollTo(0,document.body.scrollHeight); }</script>';
         }
 
         echo '<script>__sd();</script>';
-        flush();
         ob_flush();
     }
 
@@ -43,18 +41,18 @@ function ___($echo='', $echo2=false, $scroll_down=false) {
 
 
 function profiler($microtime=false) {
-    global $maxsim, $__sql, $__rpc;
+    global $maxsim;
 
     if (!$microtime)
         $microtime = $_SERVER['REQUEST_TIME_FLOAT'];
 
     $output[] = number_format((microtime(true)-$microtime)*1000,2).' ms';
     
-    if (is_numeric(@$__sql['count']))
-        $output[] = number_format($__sql['count']).' sql';
+    if ($maxsim['debug']['sql']['count'] ?? null)
+        $output[] = number_format($maxsim['debug']['sql']['count']).' sql';
     
-    if (is_numeric(@$__rpc['count']))
-        $output[] = number_format($__rpc['count']).' rpc';
+    if ($maxsim['debug']['rpc']['count'] ?? null)
+        $output[] = number_format($maxsim['debug']['rpc']['count']).' rpc';
 
     $output[] = number_format(memory_get_usage(false)/1024).' kb';
     
@@ -67,7 +65,7 @@ function maxsim_timing() {
     global $maxsim;
     
 
-    if (isset($maxsim['debug']['timing']['app']))
+    if ($maxsim['debug']['timing']['app'] ?? null)
         $maxsim['debug']['timing']['template'] = microtime(true);
     else
         $maxsim['debug']['timing']['app'] = microtime(true);
@@ -85,7 +83,7 @@ function maxsim_timing() {
             $microtime_last = $value;
         } else {
             $debug_log_target[$key] = round($value,2);
-            $server_timing[] = $key.';dur='.$debug_log_target[$key].';desc="'.$key.'"';
+            $server_timing[] = $key.';dur='.$debug_log_target[$key].';desc="'.strtoupper($key).'"';
         }
     }
 
@@ -105,5 +103,14 @@ function maxsim_timing() {
 
     header('server-timing: '.implode(', ', (array)$server_timing));
 }
-
 header_register_callback('maxsim_timing');
+
+
+
+function debug_profile_bar() {
+    echo '<div class="progress" style="margin-top:15px;">';
+    echo '<div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>';
+    echo '<div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>';
+    echo '<div class="progress-bar bg-info" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>';
+    echo '</div>';
+}

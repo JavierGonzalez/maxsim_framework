@@ -26,4 +26,3 @@ RewriteRule .* /$maxsim.php [L]
 RedirectMatch 403 /\.git\.*
 
 ################################################
-

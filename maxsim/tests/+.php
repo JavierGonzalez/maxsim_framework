@@ -73,7 +73,7 @@ function test_print_html($expected, $code, $comment = '', $limit_ms = false,
                 <td nowrap style="overflow-x:hidden;max-width:400px;">'.print_var($result).'</td>';
 
                 
-        echo '  <td nowrap style="background:#EEE;padding-left:10px;">'.str_replace('&lt;?php&nbsp;', '', highlight_string('<?php '.$code, true)).'</td>
+        echo '  <td nowrap style="background:#EEE;padding-left:10px;">'.substr(highlight_string('<?php '.$code, true),6).'</td>
 				<td>' . $comment . '</td>
 			</tr>';
     }

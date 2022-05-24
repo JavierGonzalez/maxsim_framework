@@ -5,8 +5,7 @@
 # MAXSIM
 isset($GLOBALS['maxsim'])
 json_decode(test_url('/$maxsim'), true)['version']
-true === is_readable('$maxsim.php')
-
+is_readable('$maxsim.php')
 
 # DIR
 'exec.php' === basename($GLOBALS['maxsim']['app'])

@@ -1,4 +1,4 @@
-<?php maxsim: /*  SIMPLICITY IS THE MAXIMUM SOPHISTICATION  *\
+<?php maxsim: /* SIMPLICITY IS THE MAXIMUM SOPHISTICATION *\
 
 MIT License
 
@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.                                                                  */
 
 
-$maxsim['version'] = '0.5.18';
+$maxsim['version'] = '0.5.19';
 
 ob_start();
 maxsim_router();
@@ -91,7 +91,7 @@ function maxsim_router() {
     foreach ($levels AS $id => $level) {
         $path[] = $level;
 
-        if (!$ls = glob(($id?implode('/', array_filter($path)).'/':'').'*'))
+        if (!$ls = maxsim_scandir(($id!==0?implode('/', array_filter($path)):'')))
             break;
 
         maxsim_autoload($ls);
@@ -101,7 +101,7 @@ function maxsim_router() {
                 $maxsim['app'] = $file;
 
         foreach ($ls AS $file)
-            if (isset($levels[$id+1]) AND basename($file) === $levels[$id+1].'.php')
+            if (isset($levels[$id + 1]) AND basename($file) === $levels[$id+1].'.php')
                 $maxsim['app'] = $file;
     }
     
@@ -128,7 +128,7 @@ function maxsim_autoload(array $ls, bool $autoload_files = false) {
 
         $prefix = substr($dir_curent,0,1);
         if ($prefix === '+')
-            maxsim_autoload(glob($dir.'/*'), true);
+            maxsim_autoload(maxsim_scandir($dir), true);
         else if ($prefix === '#' OR $prefix === '@')
             $maxsim[$prefix][substr($dir_curent,1)] = null;
     }
@@ -154,4 +154,26 @@ function maxsim_get() {
 
 function maxsim_dir(string $dir = __DIR__) {
     return (string) substr(str_replace($_SERVER['DOCUMENT_ROOT'], '', $dir).'/', 1);
+}
+
+
+function maxsim_scandir(string $dir = '') {
+    $dir = str_replace('*', '', $dir);
+    if ($dir !== '') {
+        if (substr($dir, -1) !== '/')
+            $dir .= '/';
+        if (!is_dir($dir))
+            return false;
+    }
+
+    $ls = scandir('./'.$dir);
+    if (!is_array($ls))
+        return (bool) false;
+
+    $output = [];
+    foreach ($ls AS $file)
+        if (substr($file, 0, 1) !== '.')
+            $output[] = $dir.$file;
+
+    return (array) $output;
 }

@@ -2,10 +2,12 @@
 
 // Test execution in /maxsim/tests
 
-# MAXSIM
+
+# maxsim
 isset($GLOBALS['maxsim'])
 json_decode(test_url('/$maxsim'), true)['version']
 is_readable('$maxsim.php')
+
 
 # DIR
 'exec.php' === basename($GLOBALS['maxsim']['app'])
@@ -15,6 +17,15 @@ is_readable('$maxsim.php')
 'maxsim/tests/' === maxsim_dir(__DIR__)
 true === in_array($GLOBALS['maxsim']['app_dir'].'+.php', $GLOBALS['maxsim']['autoload'])
 
+
+# maxsim_scandir()
+'$maxsim.php' === maxsim_scandir()[0]
+3 <= count(maxsim_scandir())
+'maxsim/tests/+.css' === maxsim_scandir('maxsim/tests')[0]
+'maxsim/tests/+.css' === maxsim_scandir('maxsim/tests/')[0]
+'maxsim/tests/+.css' === maxsim_scandir('maxsim/tests/*')[0]
+glob('*')[1] === maxsim_scandir('*')[1]
+glob('maxsim/tests/*')[2] === maxsim_scandir('maxsim/tests/*')[2]
 
 # GET
 '$maxsim.phpt' === basename($_GET['file'])
@@ -74,6 +85,7 @@ file_put_contents($test_app.'.php', '<?php exit(\'ok\');')
 'ok' === test_url('/'.$test_app.'/a/b?c=d')
 'ok' === test_url('/'.$test_app.'/a/b/?c=d')
 unlink($test_app.'.php')
+
 
 # Test app dir
 $test_app_dir = 'dir_'.mt_rand(10000000,99999999)

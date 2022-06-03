@@ -23,15 +23,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.                                                                  */
 
 
-$maxsim['version'] = '0.5.19';
+$maxsim['maxsim_version'] = '0.5.20';
 
 ob_start();
+
 maxsim_router();
 maxsim_get();
-$maxsim['output'] = 'template';
-$maxsim['debug']['timing']['router'] = microtime(true);
 
 
+foreach (maxsim_event('autoload') AS $file) include_once($file);
 for ($maxsim_al = 0; $maxsim_al < count((array)$maxsim['autoload']); $maxsim_al++) {
     $maxsim_file = $maxsim['autoload'][$maxsim_al];
     $maxsim_ext = substr($maxsim_file,-4);
@@ -43,22 +43,13 @@ for ($maxsim_al = 0; $maxsim_al < count((array)$maxsim['autoload']); $maxsim_al+
         if ($maxsim_key = ltrim(basename($maxsim_file, $maxsim_ext), '+'))
             define($maxsim_key, (array)parse_ini_file($maxsim_file, true, INI_SCANNER_TYPED));
 }
-$maxsim['debug']['timing']['autoload'] = microtime(true);
+foreach (maxsim_event('autoload_after') AS $file) include_once($file);
 
 
-if ($maxsim['app'] === '$maxsim.php')
-    exit(json_encode(['version' => $maxsim['version']]));
-else if (is_string($maxsim['app']))
-    include_once($maxsim['app']); ###
-$maxsim['debug']['timing']['app'] = microtime(true);
+foreach (maxsim_event('app') AS $file) include_once($file);
+if (is_string($maxsim['app'])) include_once($maxsim['app']); ###
+foreach (maxsim_event('app_after') AS $file) include_once($file);
 
-
-if ($_GET['template'] ?? null === 'false') {
-    foreach ($maxsim['autoload'] ?? [] AS $file)
-        if (substr($file,-4) === '.css')
-            echo '<link rel="stylesheet" enctype="text/css" href="/'.$file.'" media="all" />'."\n";
-    exit;
-}
 
 if (isset($maxsim['redirect'])) {
     $_SERVER['REQUEST_URI'] = $maxsim['redirect'];
@@ -66,19 +57,12 @@ if (isset($maxsim['redirect'])) {
     goto maxsim;
 }
 
+foreach (maxsim_event('template') AS $file) include_once($file);
 
-if ($maxsim['output'] === 'json' AND is_array($echo)) {
-    ob_end_clean();
-    header('content-type: application/json');
-    echo json_encode((array)$echo, JSON_PRETTY_PRINT);
-
-} else if (file_exists((string) $maxsim['output'].'/index.php')) {
-    $echo = ob_get_contents();
-    ob_end_clean();
-    include_once($maxsim['output'].'/index.php');
-}
+foreach (maxsim_event('exit') AS $file) include_once($file);
 
 exit;
+
 
 
 function maxsim_router() {
@@ -109,6 +93,8 @@ function maxsim_router() {
         $maxsim['app_dir'] = (dirname($maxsim['app'])!=='.'?dirname($maxsim['app']).'/':'');
         $maxsim['app_url'] = '/'.str_replace(['/index','index'], '', substr($maxsim['app'],0,-4));
     }
+
+    if ($maxsim['app'] === '$maxsim.php') exit(json_encode(['maxsim_version' => $maxsim['maxsim_version']]));
 }
 
 
@@ -118,7 +104,7 @@ function maxsim_autoload(array $ls, bool $autoload_files = false) {
     foreach ($ls AS $file)
         if (preg_match('/\.(php|js|css|ini)$/', basename($file)))
             if (!isset($maxsim['autoload']) OR !in_array($file, (array)$maxsim['autoload']))
-                if ($autoload_files === true OR substr(basename($file),0,1) === '+')
+                if (($autoload_files === true OR substr(basename($file),0,1) === '+') AND substr(basename($file),0,1) !== '!')
                     $maxsim['autoload'][] = $file;
 
     foreach ($ls AS $dir) {
@@ -158,7 +144,6 @@ function maxsim_dir(string $dir = __DIR__) {
 
 
 function maxsim_scandir(string $dir = '') {
-    $dir = str_replace('*', '', $dir);
     if ($dir !== '') {
         if (substr($dir, -1) !== '/')
             $dir .= '/';
@@ -174,6 +159,23 @@ function maxsim_scandir(string $dir = '') {
     foreach ($ls AS $file)
         if (substr($file, 0, 1) !== '.')
             $output[] = $dir.$file;
+
+    return (array) $output;
+}
+
+
+function maxsim_event(string $type) {
+    global $maxsim;
+    
+    if (!isset($maxsim['events'])) {
+        $maxsim['events'] = glob('{,*/,*/*/}\!event_*.php', GLOB_BRACE);
+        sort($maxsim['events']);
+    }
+    
+    $output = [];
+    foreach ($maxsim['events'] AS $file)
+        if (fnmatch('*\!event_'.$type.'[.-]*', $file))
+            $output[] = $file;
 
     return (array) $output;
 }

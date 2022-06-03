@@ -2,29 +2,29 @@
 <html>
 <head>
 
-<title><?=(isset($maxsim['template']['title'])?$maxsim['template']['title']:ucfirst(str_replace('_', ' ', basename($maxsim['app'] ?? '', '.php'))))?></title>
+<title><?=($template['title'] ?? ucwords(trim(str_replace(['_', '/'], ' ', $maxsim['app_url'] ?? ''))))?></title>
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
-<meta name="description" content="<?=$maxsim['template']['description'] ?? null?>" />
+<meta name="description" content="<?=$template['description'] ?? null?>" />
 
 <link rel="icon" href="data:,">
 
 <?php
 
-echo $maxsim['template']['head'] ?? null;
+echo $template['head'] ?? null;
 
 foreach ($maxsim['autoload'] ?? [] AS $file)
 	if (substr($file,-4) === '.css')
 		echo '<link rel="stylesheet" enctype="text/css" href="/'.$file.'" media="all" />'."\n";
 
-if (isset($maxsim['template']['css']))
-	echo '<style type="text/css">'.$maxsim['template']['css'].'</style>';
+if (isset($template['css']))
+	echo '<style type="text/css">'.$template['css'].'</style>';
 
 
-if (isset($maxsim['template']['js_array'])) {
+if (isset($template['js_array'])) {
 	echo '<script type="text/javascript">';
-	foreach ($maxsim['template']['js_array'] AS $key => $value)
+	foreach ($template['js_array'] AS $key => $value)
 		echo $key.' = "'.str_replace('"', '\"', $value).'";'."\n";
 	echo '</script>';
 }
@@ -49,7 +49,7 @@ if (isset($maxsim['template']['js_array'])) {
 
     <div id="top_right">
         
-        <?=$maxsim['template']['top_right'] ?? null?> 
+        <?=$template['top_right'] ?? null?> 
         
         <span id="print_login"></span>
 
@@ -84,11 +84,11 @@ if ($echo === '') {
 <?php
 foreach ($maxsim['autoload'] ?? [] AS $file)
 	if (substr($file,-3)==='.js')
-		echo '<script type="module" src="/'.$file.'"></script>'."\n";
+		echo '<script src="/'.$file.'"></script>'."\n";
 ?>
 
 <script type="text/javascript">
-<?=$maxsim['template']['js'] ?? null?>
+<?=$template['js'] ?? null?>
 </script>
 
 </body>

@@ -104,13 +104,3 @@ function maxsim_timing() {
     header('server-timing: '.implode(', ', (array)$server_timing));
 }
 header_register_callback('maxsim_timing');
-
-
-
-function debug_profile_bar() {
-    echo '<div class="progress" style="margin-top:15px;">';
-    echo '<div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>';
-    echo '<div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>';
-    echo '<div class="progress-bar bg-info" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>';
-    echo '</div>';
-}

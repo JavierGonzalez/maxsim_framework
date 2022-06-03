@@ -76,14 +76,46 @@ function maxsim_timing() {
     $debug_log_target = ['time' => time()];
 
     $id = 0;
+
+
+
+    $server_timing = [];
     foreach ((array) $maxsim['debug']['timing'] AS $key => $value) { 
+
+        $desc = '';
+        if ($key === 'maxsim') {
+            $desc = ' ('.$maxsim['maxsim_version'].')';
+        } else if ($key === 'router') {
+            $desc = ' ('.$maxsim['debug']['ls'].' ls, '.count($maxsim['events']).' events)';
+        } else if ($key === 'autoload') {
+            $autoload_files_php = 0;
+            foreach ($maxsim['autoload'] AS $file)
+                if (substr($file, -4) === '.php')
+                    $autoload_files_php++;
+            $desc = ' ('.$autoload_files_php.' php)';
+        } else if ($key === 'app') {
+            $desc = ' ('.$maxsim['app'].')';
+        } else if ($key === 'template') {
+            $autoload_files_js = 0;
+            $autoload_files_css = 0;
+            foreach ($maxsim['autoload'] AS $file) {
+                if (substr($file, -3) === '.js')
+                    $autoload_files_js++;
+                if (substr($file, -4) === '.css')
+                    $autoload_files_css++;
+            }
+            $desc = ' ('.$autoload_files_js.' js, '.$autoload_files_css.' css)';
+        } else if ($key === 'sql') {
+            $desc = ' ('.$maxsim['debug']['sql']['count'].' queries)';
+        }
+
         if ($value > 1000000000) {
             $debug_log_target[$key] = round(($value-$microtime_last)*1000, 2);
-            $server_timing[] = ++$id.';dur='.$debug_log_target[$key].';desc="'.$key.'"';
+            $server_timing[] = ++$id.';dur='.$debug_log_target[$key].';desc="'.$key.$desc.'"';
             $microtime_last = $value;
         } else {
             $debug_log_target[$key] = round($value,2);
-            $server_timing[] = $key.';dur='.$debug_log_target[$key].';desc="'.strtoupper($key).'"';
+            $server_timing[] = $key.';dur='.$debug_log_target[$key].';desc="'.strtoupper($key).$desc.'"';
         }
     }
 

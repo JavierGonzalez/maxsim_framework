@@ -20,35 +20,40 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.                                                                  */
+SOFTWARE.                                                                  
+                                                                                */
 
-
-$maxsim['maxsim_version'] = '0.5.20';
+$maxsim = [
+    'maxsim_version' => '0.5.20',
+    'app' => false,
+    'app_dir' => false,
+    'app_url' => false,
+    'autoload' => [],
+];
 
 ob_start();
 
+foreach (maxsim_event('router') AS $file) include($file);
 maxsim_router();
-maxsim_get();
 
 
-foreach (maxsim_event('autoload') AS $file) include_once($file);
+foreach (maxsim_event('autoload') AS $file) include($file);
 for ($maxsim_al = 0; $maxsim_al < count((array)$maxsim['autoload']); $maxsim_al++) {
     $maxsim_file = $maxsim['autoload'][$maxsim_al];
-    $maxsim_ext = substr($maxsim_file,-4);
 
-    if ($maxsim_ext === '.php')
+    if (substr($maxsim_file,-4) === '.php')
         include_once($maxsim_file);
 
-    else if ($maxsim_ext === '.ini')
-        if ($maxsim_key = ltrim(basename($maxsim_file, $maxsim_ext), '+'))
+    else if (substr($maxsim_file,-4) === '.ini')
+        if ($maxsim_key = ltrim(basename($maxsim_file, substr($maxsim_file,-4)), '+'))
             define($maxsim_key, (array)parse_ini_file($maxsim_file, true, INI_SCANNER_TYPED));
 }
-foreach (maxsim_event('autoload_after') AS $file) include_once($file);
+foreach (maxsim_event('autoload_after') AS $file) include($file);
 
 
-foreach (maxsim_event('app') AS $file) include_once($file);
-if (is_string($maxsim['app'])) include_once($maxsim['app']); ###
-foreach (maxsim_event('app_after') AS $file) include_once($file);
+foreach (maxsim_event('app') AS $file) include($file);
+if (is_string($maxsim['app'])) include($maxsim['app']); ###
+foreach (maxsim_event('app_after') AS $file) include($file);
 
 
 if (isset($maxsim['redirect'])) {
@@ -57,9 +62,9 @@ if (isset($maxsim['redirect'])) {
     goto maxsim;
 }
 
-foreach (maxsim_event('template') AS $file) include_once($file);
+foreach (maxsim_event('template') AS $file) include($file);
 
-foreach (maxsim_event('exit') AS $file) include_once($file);
+foreach (maxsim_event('exit') AS $file) include($file);
 
 exit;
 
@@ -67,7 +72,6 @@ exit;
 
 function maxsim_router() {
     global $maxsim;
-    $maxsim['app_url'] = $maxsim['app_dir'] = $maxsim['app'] = false;
 
     $levels = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
 
@@ -95,6 +99,8 @@ function maxsim_router() {
     }
 
     if ($maxsim['app'] === '$maxsim.php') exit(json_encode(['maxsim_version' => $maxsim['maxsim_version']]));
+
+    maxsim_get();
 }
 
 
@@ -144,6 +150,8 @@ function maxsim_dir(string $dir = __DIR__) {
 
 
 function maxsim_scandir(string $dir = '') {
+    global $maxsim;
+    
     if ($dir !== '') {
         if (substr($dir, -1) !== '/')
             $dir .= '/';
@@ -151,6 +159,7 @@ function maxsim_scandir(string $dir = '') {
             return false;
     }
 
+    foreach (maxsim_event('maxsim_ls') AS $file) include($file);
     $ls = scandir('./'.$dir);
     if (!is_array($ls))
         return (bool) false;
@@ -164,17 +173,18 @@ function maxsim_scandir(string $dir = '') {
 }
 
 
-function maxsim_event(string $type) {
+function maxsim_event(string $name) {
     global $maxsim;
     
     if (!isset($maxsim['events'])) {
-        $maxsim['events'] = glob('{,*/,*/*/}\!event_*.php', GLOB_BRACE);
+        $maxsim['events'] = glob('{,*/,*/*/}!event_*.php', GLOB_BRACE);
         sort($maxsim['events']);
+        foreach (maxsim_event('maxsim_ls') AS $file) include($file);
     }
     
     $output = [];
     foreach ($maxsim['events'] AS $file)
-        if (fnmatch('*\!event_'.$type.'[.-]*', $file))
+        if (fnmatch('!event_'.$name.'[.-]*', basename($file)))
             $output[] = $file;
 
     return (array) $output;

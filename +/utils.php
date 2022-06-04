@@ -1,7 +1,20 @@
 <?php # maxsim.tech — MIT License — Copyright (c) 2005-2020 Javier González González <gonzo@virtualpol.com>
 
 
-function num($number = null, int $decimals = 0) { 
+function redirect(string $url = '/') {
+    header('Location: '.$url);
+    exit;
+}
+
+
+function exit_json(array $echo) {
+    ob_end_clean();
+    echo json_encode($echo, JSON_PRETTY_PRINT);
+    exit;
+}
+
+
+function num($number = null, int $decimals = 0): string { 
 
     if (!is_numeric($number))
         return '';
@@ -10,8 +23,8 @@ function num($number = null, int $decimals = 0) {
 }
 
 
-function shell(string $command) {
-    return trim(shell_exec($command.' 2>&1'));
+function shell(string $cmd): string {
+    return trim(shell_exec($cmd.' 2>&1'));
 }
 
 
@@ -23,16 +36,10 @@ function datetime(int $days = 0, $hours = ' H:i:s') {
 function every(int $seconds = 60, int $id = 0) {
     global $every_last;
 
-    if (time() >= $every_last[$id]+$seconds)
+    if (time() >= $every_last[$id] + $seconds)
         return $every_last[$id] = time();
 
     return false;
-}
-
-
-function redirect(string $url = '/') {
-    header('Location: '.$url);
-    exit;
 }
 
 
@@ -48,3 +55,5 @@ function text_to_title(string $title) {
     $title = str_replace(['-', '_', '/'], ' ', $title);
     return ucwords(trim($title));
 }
+
+

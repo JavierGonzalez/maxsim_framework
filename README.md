@@ -4,19 +4,19 @@ Maximum Simplicity framework
 
 
 ### Features
-* 0.05 milliseconds `20k requests per second`.
+* Sub-millisecond overhead `20k requests per second`.
 * Simple, modular, fast.
 * Hello World in one line.
-* File System routing (with autoload and events).
+* File-System routing, autoload and events.
 * Autoload files with prefix `+` and suffix `.php .js .css .ini`.
 * Autoload files inside a directory with prefix `+`, recursively.
-* Event injection with files everywhere with prefix `!event_name.php`.
-* Single-line tests in `.phpt` files everywhere and real-time execution in `/maxsim/tests`.
+* Events injection with files everywhere with prefix `!` and suffix `.php`.
+* Single-line tests with `.phpt` files everywhere, execution in `/maxsim/tests`.
 * 180-line single-file framework kernel.
 
 
 ### To know
-* Experimental, alpha, undocumented.
+* Experimental, alpha.
 * Minimum required: `.htaccess` and `$maxsim.php`.
 * Docker deployment with: `docker-compose build` and `docker-compose up`.
 * Framework kernel info in `$maxsim` array.
@@ -29,8 +29,8 @@ Maximum Simplicity framework
 * Access denied for any file name containing `password`.
 * Framework app url rewrite with: `$maxsim['redirect'] = '/url';`.
 * Text-plain output with: `exit;`.
-* Performance tested with: `ab -n 50000 -c 32 http://localhost:80/hello_world` (minimal branch, 1 route, 1 template, Alpine docker, PHP 8.1, 8MB RAM).
-* Simple, short, light, fast, modular, procedural first, snake_case.
+* Performance test with: `ab -n 50000 -c 32 http://localhost:80/hello_world` (1 route, 1 template, Alpine docker, PHP 8.1, 8 theads).
+* Simple, short, light, fast, modular, procedural first, snake_case, product-oriented.
 
 
 ### Future features

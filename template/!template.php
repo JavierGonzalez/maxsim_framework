@@ -1,4 +1,9 @@
-<!doctype html>
+<?php
+
+$echo = ob_get_contents();
+ob_end_clean();
+
+?><!doctype html>
 <html>
 <head>
 

@@ -93,8 +93,6 @@ function maxsim_timing() {
                 if (substr($file, -4) === '.php')
                     $autoload_files_php++;
             $desc = ' ('.$autoload_files_php.' php)';
-        } else if ($key === 'app') {
-            $desc = ' ('.$maxsim['app'].')';
         } else if ($key === 'template') {
             $autoload_files_js = 0;
             $autoload_files_css = 0;
@@ -123,7 +121,7 @@ function maxsim_timing() {
     $debug_log_target['TOTAL'] = round((microtime(true)-$_SERVER['REQUEST_TIME_FLOAT'])*1000, 2);
     
     
-    $server_timing[] = '99;desc="RAM '.$debug_log_target['RAM'].' kb"';
+    $server_timing[] = '99;desc="RAM ('.$debug_log_target['RAM'].' kb)"';
     $server_timing[] = 'TOTAL;dur='.$debug_log_target['TOTAL'];
     
     $debug_log_target['url'] = $_SERVER['REQUEST_URI'];

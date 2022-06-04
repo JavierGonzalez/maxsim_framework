@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2005 Javier González González — maxsim.tech
+Copyright (c) 2005 Javier González González — javier.gonzalez@maxsim.tech
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,23 +21,23 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.                                                                  
-                                                                                */
+                                                                              */
 
 $maxsim = [
-    'maxsim_version' => '0.5.20',
+    'maxsim_version' => '0.5.21',
     'app' => false,
     'app_dir' => false,
     'app_url' => false,
     'autoload' => [],
 ];
 
+
+maxsim_event('maxsim_router');
+maxsim_router();
 ob_start();
 
-foreach (maxsim_event('router') AS $file) include($file);
-maxsim_router();
 
-
-foreach (maxsim_event('autoload') AS $file) include($file);
+maxsim_event('maxsim_autoload');
 for ($maxsim_al = 0; $maxsim_al < count((array)$maxsim['autoload']); $maxsim_al++) {
     $maxsim_file = $maxsim['autoload'][$maxsim_al];
 
@@ -48,12 +48,12 @@ for ($maxsim_al = 0; $maxsim_al < count((array)$maxsim['autoload']); $maxsim_al+
         if ($maxsim_key = ltrim(basename($maxsim_file, substr($maxsim_file,-4)), '+'))
             define($maxsim_key, (array)parse_ini_file($maxsim_file, true, INI_SCANNER_TYPED));
 }
-foreach (maxsim_event('autoload_after') AS $file) include($file);
+maxsim_event('maxsim_autoload_after');
 
 
-foreach (maxsim_event('app') AS $file) include($file);
-if (is_string($maxsim['app'])) include($maxsim['app']); ###
-foreach (maxsim_event('app_after') AS $file) include($file);
+maxsim_event('maxsim_app');
+if (is_string($maxsim['app'])) include($maxsim['app']);
+maxsim_event('maxsim_app_after');
 
 
 if (isset($maxsim['redirect'])) {
@@ -62,9 +62,8 @@ if (isset($maxsim['redirect'])) {
     goto maxsim;
 }
 
-foreach (maxsim_event('template') AS $file) include($file);
-
-foreach (maxsim_event('exit') AS $file) include($file);
+maxsim_event('template');
+maxsim_event('maxsim_exit');
 
 exit;
 
@@ -89,7 +88,7 @@ function maxsim_router() {
                 $maxsim['app'] = $file;
 
         foreach ($ls AS $file)
-            if (isset($levels[$id + 1]) AND basename($file) === $levels[$id+1].'.php')
+            if (isset($levels[$id + 1]) AND basename($file) === $levels[$id + 1].'.php')
                 $maxsim['app'] = $file;
     }
     
@@ -110,7 +109,7 @@ function maxsim_autoload(array $ls, bool $autoload_files = false) {
     foreach ($ls AS $file)
         if (preg_match('/\.(php|js|css|ini)$/', basename($file)))
             if (!isset($maxsim['autoload']) OR !in_array($file, (array)$maxsim['autoload']))
-                if (($autoload_files === true OR substr(basename($file),0,1) === '+') AND substr(basename($file),0,1) !== '!')
+                if (substr(basename($file),0,1) !== '!' AND ($autoload_files === true OR substr(basename($file),0,1) === '+'))
                     $maxsim['autoload'][] = $file;
 
     foreach ($ls AS $dir) {
@@ -130,7 +129,7 @@ function maxsim_autoload(array $ls, bool $autoload_files = false) {
 function maxsim_get() {
     global $_GET, $maxsim;
 
-    $app_level = count(explode('/', $maxsim['app']))-1;
+    $app_level = count(explode('/', $maxsim['app'])) - 1;
     
     $url = explode('?', $_SERVER['REQUEST_URI'])[0];
     
@@ -150,8 +149,6 @@ function maxsim_dir(string $dir = __DIR__) {
 
 
 function maxsim_scandir(string $dir = '') {
-    global $maxsim;
-    
     if ($dir !== '') {
         if (substr($dir, -1) !== '/')
             $dir .= '/';
@@ -159,8 +156,8 @@ function maxsim_scandir(string $dir = '') {
             return false;
     }
 
-    foreach (maxsim_event('maxsim_ls') AS $file) include($file);
     $ls = scandir('./'.$dir);
+    maxsim_event('maxsim_ls');
     if (!is_array($ls))
         return (bool) false;
 
@@ -175,17 +172,18 @@ function maxsim_scandir(string $dir = '') {
 
 function maxsim_event(string $name) {
     global $maxsim;
-    
-    if (!isset($maxsim['events'])) {
-        $maxsim['events'] = glob('{,*/,*/*/}!event_*.php', GLOB_BRACE);
-        sort($maxsim['events']);
-        foreach (maxsim_event('maxsim_ls') AS $file) include($file);
-    }
-    
-    $output = [];
-    foreach ($maxsim['events'] AS $file)
-        if (fnmatch('!event_'.$name.'[.-]*', basename($file)))
-            $output[] = $file;
 
-    return (array) $output;
+    if (!isset($maxsim['events'])) {
+        $maxsim['events'] = glob('{,*/,*/*/}\!*.php', GLOB_BRACE);
+        sort($maxsim['events']);
+        maxsim_event('maxsim_ls');
+    }
+
+    $maxsim_event_output = [];
+    foreach ($maxsim['events'] AS $file)
+        if (preg_match('/^\!'.$name.'(\.|-)/', basename($file)))
+            if ($maxsim_event_output[] = $file)
+                include($file);
+
+    return (array) $maxsim_event_output;
 }

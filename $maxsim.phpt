@@ -59,6 +59,7 @@ null   === $_GET[1]
 # File system routing test file
 $test_app = 'test_'.mt_rand(10000000,99999999)
 404  === test_url('/'.$test_app, 'status')
+is_writable('.')
 file_put_contents($test_app.'.php', '<?php exit(\'ok\');')
 200  === test_url('/'.$test_app, 'status')
 'ok' === test_url('/'.$test_app)
@@ -73,6 +74,7 @@ unlink($test_app.'.php')
 $test_app_dir = 'dir_'.mt_rand(10000000,99999999)
 false === test_url('/'.$test_app_dir)
 404  === test_url('/'.$test_app_dir, 'status')
+is_writable('.')
 mkdir($test_app_dir)
 file_put_contents($test_app_dir.'/index.php', '<?php exit(\'ok\');')
 200  === test_url('/'.$test_app_dir.'/a/b/?c=d', 'status')
@@ -102,8 +104,10 @@ true === in_array($GLOBALS['maxsim']['app_dir'].'+.php', $GLOBALS['maxsim']['aut
 'maxsim/tests/+.css' === maxsim_scandir('maxsim/tests/')[0]
 glob('*')[1] === maxsim_scandir('')[1]
 glob('maxsim/tests/*')[2] === maxsim_scandir('maxsim/tests/')[2]
+2 === count(glob('{$maxsim.php,$maxsim.phpt}', GLOB_BRACE))
+'$maxsim.phpt' === glob('{$maxsim.php,$maxsim.phpt}', GLOB_BRACE)[1]
 
 
 # maxsim_event()
-'+/+debug/!event_autoload.php'       === maxsim_event('autoload')[0]
-'+/+debug/!event_autoload_after.php' === maxsim_event('autoload_after')[0]
+in_array('+/+debug/!maxsim_autoload.php',       maxsim_event('maxsim_autoload'))
+in_array('+/+debug/!maxsim_autoload_after.php', maxsim_event('maxsim_autoload_after'))

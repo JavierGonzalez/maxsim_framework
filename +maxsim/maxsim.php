@@ -24,7 +24,7 @@ SOFTWARE.
                                                                               */
 
 $maxsim = [
-    'version'  => '0.5.22',
+    'version'  => '0.5.24',
     'app'      => null,
     'app_dir'  => null,
     'app_url'  => null,
@@ -125,7 +125,7 @@ function maxsim_autoload(array $ls, bool $autoload_files = false) {
         if ($prefix === '+')
             maxsim_autoload(maxsim_scandir($dir), true);
         else if ($prefix === '#' OR $prefix === '@')
-            $maxsim[$prefix][substr($dir_curent,1)] = null;
+            $maxsim['tags'][$prefix][substr($dir_curent,1)] = null;
     }
 }
 

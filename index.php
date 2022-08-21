@@ -6,6 +6,7 @@ if (isset($_GET[1])) {
 }
 
 ?>
+
 <h1>maxsim</h1>
 
 <hr />

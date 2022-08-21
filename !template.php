@@ -1,9 +1,10 @@
-<?php
+<?php # maxsim.tech — MIT License — Copyright (c) 2005 Javier González González <javier.gonzalez@maxsim.tech>
 
 global $template;
 
 $echo = ob_get_contents();
 ob_end_clean();
+
 
 ?><!doctype html>
 <html>
@@ -17,13 +18,13 @@ ob_end_clean();
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
-<meta name="description" content="<?=$template['description'] ?? null?>" />
+<meta name="description" content="<?=$template['description'] ?? ''?>" />
 
 <link rel="icon" href="data:,">
 
 <?php
 
-echo $template['head'] ?? null;
+echo $template['head'] ?? '';
 
 foreach ($maxsim['autoload'] ?? [] AS $file)
 	if (substr($file,-4) === '.css')
@@ -60,7 +61,7 @@ if (isset($template['js_array'])) {
 
     <div id="top_right">
         
-        <?=$template['top_right'] ?? null?> 
+        <?=$template['top_right'] ?? ''?> 
         
         <span id="print_login"></span>
 

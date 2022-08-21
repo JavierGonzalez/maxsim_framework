@@ -84,7 +84,7 @@ function maxsim_timing() {
 
         $desc = '';
         if ($key === 'maxsim') {
-            $desc = ' ('.$maxsim['maxsim_version'].')';
+            $desc = ' ('.$maxsim['version'].')';
         } else if ($key === 'router') {
             $desc = ' ('.$maxsim['debug']['ls'].' ls, '.count($maxsim['events']).' events)';
         } else if ($key === 'autoload') {

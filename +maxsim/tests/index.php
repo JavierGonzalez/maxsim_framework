@@ -29,7 +29,9 @@ echo '<table width="100%" border=0><tr><td valign=top align=right style="min-wid
 <div class="box p-3">
 
 <div class="test-box-num" style="font-size:20px;width:100%;height:75px;background-color:'.($test_fail_total_num===0?'blue':'red').';">
-<div style="position: relative; top: 50%; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%);">'.($test_fail_total_num===0?'ALL PASS':$test_fail_total_num).'</div>
+<div style="position: relative; top: 50%; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%);">
+'.($test_fail_total_num===0?'ALL PASS':$test_fail_total_num).'
+</div>
 </div><br />
     
 '.implode("\n", $nav_tabs_li).'

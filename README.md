@@ -29,7 +29,7 @@ Maximum Simplicity framework
 * Access denied for any file name containing `password`.
 * Framework app url rewrite with: `$maxsim['redirect'] = '/url';`.
 * Text-plain output with: `exit;`.
-* Performance test with: `ab -n 50000 -c 32 http://localhost:80/hello_world` (1 route, 1 template, Alpine docker, PHP 8.1, 8 theads).
+* Performance test with: `ab -n 50000 -c 32 http://localhost:80/hello_world` (1 route, 1 template, Alpine docker, PHP 8.1, 8 threads).
 * Simple, short, light, fast, modular, procedural first, snake_case, product-oriented.
 
 

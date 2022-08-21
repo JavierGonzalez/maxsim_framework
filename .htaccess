@@ -1,28 +1,24 @@
 #################### maxsim ####################
 
-DirectorySlash Off
+DirectorySlash off
 
 RewriteEngine on
 RewriteBase /
 
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule .* /$maxsim.php [L]
+RewriteRule .* /+maxsim/maxsim.php [L]
 
-<FilesMatch "\.(php|phpt|txt|json|xml|yml|log|ini|env)$">
+<FilesMatch "\.(php|phpt|log|ini|env|yml|md)$">
  Order Allow,Deny
  Deny from all
 </FilesMatch>
 
-<FilesMatch "(password|^\.)">
- Order Allow,Deny
- Deny from all
-</FilesMatch>
-
-<Files $maxsim.php>
+<Files "maxsim.php">
  Order Allow,Deny
  Allow from all
 </Files>
 
-RedirectMatch 403 /\.git\.*
+RedirectMatch 403 /\..*
+RedirectMatch 403 .*password.*
 
 ################################################

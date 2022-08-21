@@ -24,13 +24,15 @@ SOFTWARE.
                                                                               */
 
 $maxsim = [
-    'maxsim_version' => '0.5.21',
-    'app' => false,
-    'app_dir' => false,
-    'app_url' => false,
+    'version'  => '0.5.22',
+    'app'      => null,
+    'app_dir'  => null,
+    'app_url'  => null,
     'autoload' => [],
 ];
 
+
+chdir($_SERVER['DOCUMENT_ROOT']);
 
 maxsim_event('maxsim_router');
 maxsim_router();
@@ -38,15 +40,15 @@ ob_start();
 
 
 maxsim_event('maxsim_autoload');
-for ($maxsim_al = 0; $maxsim_al < count((array)$maxsim['autoload']); $maxsim_al++) {
-    $maxsim_file = $maxsim['autoload'][$maxsim_al];
+for ($maxsim_i = 0; $maxsim_i < count((array)$maxsim['autoload']); $maxsim_i++) {
+    $maxsim_file = $maxsim['autoload'][$maxsim_i];
 
     if (substr($maxsim_file,-4) === '.php')
         include_once($maxsim_file);
 
     else if (substr($maxsim_file,-4) === '.ini')
         if ($maxsim_key = ltrim(basename($maxsim_file, substr($maxsim_file,-4)), '+'))
-            define($maxsim_key, (array)parse_ini_file($maxsim_file, true, INI_SCANNER_TYPED));
+            define($maxsim_key, (array) parse_ini_file($maxsim_file, true, INI_SCANNER_TYPED));
 }
 maxsim_event('maxsim_autoload_after');
 
@@ -78,7 +80,7 @@ function maxsim_router() {
     foreach ($levels AS $id => $level) {
         $path[] = $level;
 
-        if (!$ls = maxsim_scandir(($id!==0?implode('/', array_filter($path)):'')))
+        if (!$ls = maxsim_scandir(($id !== 0?implode('/', array_filter($path)):'')))
             break;
 
         maxsim_autoload($ls);
@@ -93,11 +95,12 @@ function maxsim_router() {
     }
     
     if ($maxsim['app'] !== false) {
-        $maxsim['app_dir'] = (dirname($maxsim['app'])!=='.'?dirname($maxsim['app']).'/':'');
+        $maxsim['app_dir'] = (dirname($maxsim['app']) !== '.'?dirname($maxsim['app']).'/':'');
         $maxsim['app_url'] = '/'.str_replace(['/index','index'], '', substr($maxsim['app'],0,-4));
     }
 
-    if ($maxsim['app'] === '$maxsim.php') exit(json_encode(['maxsim_version' => $maxsim['maxsim_version']]));
+    if ($maxsim['app_url'] === '/+maxsim/maxsim')
+        exit(json_encode(['maxsim_version' => $maxsim['version']], JSON_PRETTY_PRINT));
 
     maxsim_get();
 }
@@ -107,10 +110,11 @@ function maxsim_autoload(array $ls, bool $autoload_files = false) {
     global $maxsim;
 
     foreach ($ls AS $file)
-        if (preg_match('/\.(php|js|css|ini)$/', basename($file)))
+        if (preg_match('/\.(php|js|css|ini)$/', basename($file)) AND basename($file) !== 'maxsim.php')
             if (!isset($maxsim['autoload']) OR !in_array($file, (array)$maxsim['autoload']))
-                if (substr(basename($file),0,1) !== '!' AND ($autoload_files === true OR substr(basename($file),0,1) === '+'))
-                    $maxsim['autoload'][] = $file;
+                if (substr(basename($file),0,1) !== '!')
+                    if ($autoload_files === true OR substr(basename($file),0,1) === '+')
+                        $maxsim['autoload'][] = $file;
 
     foreach ($ls AS $dir) {
         $dir_curent = basename($dir);
@@ -143,7 +147,7 @@ function maxsim_get() {
 }
 
 
-function maxsim_dir(string $dir = __DIR__) {
+function maxsim_dir(string $dir) {
     return (string) substr(str_replace($_SERVER['DOCUMENT_ROOT'], '', $dir).'/', 1);
 }
 
@@ -174,7 +178,7 @@ function maxsim_event(string $name) {
     global $maxsim;
 
     if (!isset($maxsim['events'])) {
-        $maxsim['events'] = glob('{,*/,*/*/}\!*.php', GLOB_BRACE);
+        $maxsim['events'] = glob('{,*/,*/*/,*/*/*/}\!*.php', GLOB_BRACE);
         sort($maxsim['events']);
         maxsim_event('maxsim_ls');
     }

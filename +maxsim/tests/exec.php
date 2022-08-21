@@ -24,12 +24,13 @@ echo '
 
 $crono_all = microtime(true);
 
+/*
 // Maxsim autoload
 maxsim_autoload(glob(dirname($_GET['file']).'/*'));
 foreach ($maxsim['autoload'] AS $file)
     if (substr($file, -4) === '.php')
         include_once($file);
-
+*/
         
 if (substr($_GET['file'],-9,9) === '.test.php')
     include($_GET['file']);

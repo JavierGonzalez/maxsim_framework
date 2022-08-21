@@ -6,8 +6,8 @@ import "./vendor/jquery/jquery-3.5.0.min.js";
 import "./vendor/jquery/jquery-ui.min.js";
 import "./vendor/lightweight-charts.standalone.production.js";
 
-$('head').append('<script>var require = { paths: { "vs": "/maxsim/ide/vendor/monaco-editor/vs" } };</script>');
-$('head').append('<script src="/maxsim/ide/vendor/monaco-editor/vs/loader.js"></script>');
+$('head').append('<script>var require = { paths: { "vs": "' + maxsim_ide_dir + 'vendor/monaco-editor/min/vs" } };</script>');
+$('head').append('<script src="' + maxsim_ide_dir + 'vendor/monaco-editor/min/vs/loader.js"></script>');
 
 
 
@@ -122,8 +122,10 @@ function maxsim_ide_tree(item) {
     
     var dir_last = ' ';
 
-    $.get(maxsim_ide_dir + "api/list?target=" + encodeURIComponent(item), function(data){
+    $.get(maxsim_ide_dir + "api/list?target=" + encodeURIComponent(item), function(json) {
         
+        data = JSON.parse(json);
+
         $("#maxsim_ide_tree").html('');
 
         data['tree'].forEach(function(i,k,a) {
@@ -148,7 +150,7 @@ function maxsim_ide_tree(item) {
                 
                 if (name.substr(0, dir_last.length) == dir_last) {
                     var name = name.substr(dir_last.length);
-                    $('.maxsim_ide_tree_item[data-item="' + dir_last + '"] img').attr('src', '/maxsim/ide/vendor/icons/default_folder_opened.svg');
+                    $('.maxsim_ide_tree_item[data-item="' + dir_last + '"] img').attr('src', maxsim_ide_dir + 'vendor/icons/default_folder_opened.svg');
                 } else {
                     dir_last = name;
                 }
@@ -156,7 +158,11 @@ function maxsim_ide_tree(item) {
                 var name = name.split('/').reverse()[0];
             }
 
-            $("#maxsim_ide_tree").append('<div class="maxsim_ide_tree_item" data-item="' + i['name'] + '" data-type="' + i['type'] + '">' + tab + '<img src="/maxsim/ide/vendor/icons/' + icon + '" width="16" height="16" /> ' + name + '</div>');
+            $("#maxsim_ide_tree").append(`<div class="maxsim_ide_tree_item" data-item="' + i['name'] + '" data-type="' + i['type'] + '">
+                ` + tab + `
+                <img src="` + maxsim_ide_dir + `vendor/icons/` + icon + `" width="16" height="16" /> 
+                ` + name + `
+                </div>`);
         });
 
     
@@ -186,7 +192,9 @@ function maxsim_ide_tree(item) {
 function maxsim_ide_graph() {
 
 
-    $.get(maxsim_ide_dir + "api/graph?file=" + encodeURIComponent(maxsim_ide_target), function(data){
+    $.get(maxsim_ide_dir + "api/graph?file=" + encodeURIComponent(maxsim_ide_target), function(json) {
+
+        data = JSON.parse(json);
 
         $("#maxsim_ide_graph").html('');
 

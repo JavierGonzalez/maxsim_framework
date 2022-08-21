@@ -1,11 +1,8 @@
 <?php # maxsim.tech — MIT License — Copyright (c) 2005-2020 Javier González González <gonzo@virtualpol.com>
 
-
-$maxsim['output'] = 'json';
-
+$echo = [];
 
 $target_path[] = '';
-
 if (isset($_GET['target'])) {
     $target_path = array_merge($target_path, array_filter(explode('/', $_GET['target'])));
 
@@ -35,3 +32,5 @@ foreach ($ls AS $item) {
 }
 
 $echo['tree'] = array_merge($tree['dir'], $tree['file']);
+
+exit_json($echo);

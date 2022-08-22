@@ -29,11 +29,12 @@ Maximum Simplicity framework
 * Directories can be deleted or moved without modifying code.
 * `.ini` files are loaded with a PHP constant named with the file name.
 * Autoload `.css` and `.js` files included in template HTML output.
-* 404 error when browser output is null.
-* 403 error for any file or directory containing `password`, prefix `.` or suffix `.php .phpt .log .ini .env .yml .md`.
+* 404 error when output is null.
+* 404 error customized with `!error_404.php`.
+* 403 error for files or directories containing `password`, prefix `.` or suffix `.php .phpt .log .ini .env .yml .md`.
 * Event files can be triggered with `maxsim_event('name')` for `!name.php`.
 * Event injector search limited to 4 directories depth (listed in `$maxsim['events']`).
-* Event names available (in execution order): `maxsim_router maxsim_autoload maxsim_autoload_after maxsim_app maxsim_app_after template maxsim_exit`
+* Event names available (in execution order): `maxsim_router maxsim_autoload maxsim_autoload_after maxsim_app maxsim_app_after error_404 template maxsim_exit`
 * File tags in `$maxsim['tags']` with prefix `#` or `@`.
 * Framework app url rewrite with: `$maxsim['redirect'] = '/url';`.
 * maxsim version exposed in: `/+maxsim/maxsim`.

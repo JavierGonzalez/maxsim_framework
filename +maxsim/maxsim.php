@@ -24,7 +24,7 @@ SOFTWARE.
                                                                               */
 
 $maxsim = [
-    'version'  => '0.5.24',
+    'version'  => '0.5.25',
     'app'      => null,
     'app_dir'  => null,
     'app_url'  => null,
@@ -56,6 +56,14 @@ maxsim_event('maxsim_autoload_after');
 maxsim_event('maxsim_app');
 if (is_string($maxsim['app'])) include($maxsim['app']);
 maxsim_event('maxsim_app_after');
+
+
+if (ob_get_length() === 0 OR ($maxsim['app'] === 'index.php' AND isset($_GET[1]))) {
+    ob_end_clean();
+	http_response_code(404);
+    if (maxsim_event('error_404') === [])
+        echo 'Error 404: NOT FOUND';
+}
 
 
 if (isset($maxsim['redirect'])) {

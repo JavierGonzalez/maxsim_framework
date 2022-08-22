@@ -70,16 +70,7 @@ if (isset($template['js_array'])) {
 
 	<div id="content">
     
-<?php
-
-if ($echo === '') {
-	http_response_code(404);
-	echo 'Error 404: NOT FOUND';
-} else {
-	echo $echo;
-}
-
-?>
+<?=$echo?>
 
 	</div>
 

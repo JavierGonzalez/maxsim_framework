@@ -33,7 +33,6 @@ $maxsim = [
 
 
 chdir($_SERVER['DOCUMENT_ROOT']);
-
 register_shutdown_function('maxsim_event', 'maxsim_exit');
 maxsim_event('maxsim_router');
 maxsim_router();
@@ -54,7 +53,7 @@ maxsim_event('maxsim_autoload_after');
 
 
 maxsim_event('maxsim_app');
-if (is_string($maxsim['app'])) include($maxsim['app']);
+include($maxsim['app']);
 maxsim_event('maxsim_app_after');
 
 
@@ -64,7 +63,6 @@ if (ob_get_length() === 0 OR ($maxsim['app'] === 'index.php' AND isset($_GET[1])
     if (maxsim_event('error_404') === [])
         echo 'Error 404: NOT FOUND';
 }
-
 
 if (isset($maxsim['redirect'])) {
     $_SERVER['REQUEST_URI'] = $maxsim['redirect'];

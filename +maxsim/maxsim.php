@@ -168,7 +168,6 @@ function maxsim_scandir(string $dir = '') {
     }
 
     $ls = scandir('./'.$dir);
-    maxsim_event('maxsim_ls');
     if (!is_array($ls))
         return (bool) false;
 
@@ -187,7 +186,6 @@ function maxsim_event(string $name) {
     if (!isset($maxsim['events'])) {
         $maxsim['events'] = glob('{,*/,*/*/,*/*/*/}\!*.php', GLOB_BRACE);
         sort($maxsim['events']);
-        maxsim_event('maxsim_ls');
     }
     
     if ($name === 'maxsim_exit')

@@ -34,10 +34,10 @@ $maxsim = [
 
 chdir($_SERVER['DOCUMENT_ROOT']);
 
+register_shutdown_function('maxsim_event', 'maxsim_exit');
 maxsim_event('maxsim_router');
 maxsim_router();
 ob_start();
-
 
 maxsim_event('maxsim_autoload');
 for ($maxsim_i = 0; $maxsim_i < count((array)$maxsim['autoload']); $maxsim_i++) {
@@ -73,7 +73,6 @@ if (isset($maxsim['redirect'])) {
 }
 
 maxsim_event('template');
-maxsim_event('maxsim_exit');
 
 exit;
 
@@ -190,7 +189,10 @@ function maxsim_event(string $name) {
         sort($maxsim['events']);
         maxsim_event('maxsim_ls');
     }
-
+    
+    if ($name === 'maxsim_exit')
+        chdir($_SERVER['DOCUMENT_ROOT']);
+    
     $maxsim_event_output = [];
     foreach ($maxsim['events'] AS $file)
         if (preg_match('/^\!'.$name.'(\.|-)/', basename($file)))

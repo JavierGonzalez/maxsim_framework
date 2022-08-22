@@ -70,7 +70,7 @@ if (isset($template['js_array'])) {
 
 	<div id="content">
     
-<?=$echo?>
+        <?=$echo?>
 
 	</div>
 

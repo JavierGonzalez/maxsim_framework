@@ -11,20 +11,18 @@ ob_end_clean();
 <head>
 
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
 
 <title><?=($template['title'] ?? ucwords(trim(str_replace(['_', '/'], ' ', $maxsim['app_url'] ?? ''))))?></title>
 
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-
 <meta name="description" content="<?=$template['description'] ?? ''?>" />
-
-<link rel="icon" href="data:,">
 
 <?php
 
 echo $template['head'] ?? '';
+
 
 foreach ($maxsim['autoload'] ?? [] AS $file)
 	if (substr($file,-4) === '.css')
@@ -69,16 +67,16 @@ if (isset($template['js_array'])) {
 
 
 	<div id="content">
-    
+
         <?=$echo?>
+
 
 	</div>
 
 
 	<div id="footer" style="color:#777;">
-
-
-	</div>
+    
+    </div>
 
 </div>
 
@@ -88,9 +86,7 @@ if (isset($template['js_array'])) {
 foreach ($maxsim['autoload'] ?? [] AS $file)
 	if (substr($file,-3)==='.js')
 		echo '<script src="/'.$file.'"></script>'."\n";
-?>
 
-<?php
 if (isset($template['js']))
     echo '<script type="text/javascript">'.implode("\n", (array) $template['js']).'</script>';
 ?>

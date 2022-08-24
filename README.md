@@ -19,7 +19,7 @@ Maximum Simplicity framework
 ### To know
 * Experimental, in development.
 * Minimum required: `.htaccess` and `+maxsim/maxsim.php`.
-* Docker deployment with: `docker-compose build` and `docker-compose up`.
+* Docker deployment with: `docker-compose -f +maxsim/docker/docker-compose.yml up --build`.
 * Framework kernel info in array `$maxsim`.
 * Default HTML template output if `!template.php` exists.
 * Text-plain output with `exit;`.

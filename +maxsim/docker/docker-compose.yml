@@ -5,4 +5,4 @@ web:
     - "443:443"
   volumes:
     - ../..:/var/www/html
-    - ./log:/var/log/apache2
+    - ../log:/var/log/apache2

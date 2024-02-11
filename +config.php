@@ -1,3 +1,5 @@
 <?php
 
-date_default_timezone_set('UTC');
+// error_reporting(error_reporting() & ~E_NOTICE & ~E_WARNING);
+
+$template['title'] = 'maxsim';

@@ -1,11 +1,11 @@
-# maxsim framework 0.5
+# maxsim 0.5
 
-A simple modulith web framework
+Maximum Simplicity framework
 
 
 ### Key Features
-* Sub-millisecond overhead.
-* Simple, fast, monolithic, modular.
+* Sub-millisecond overhead `20k requests per second`.
+* Simple, modular, fast.
 * Hello World in one line.
 * File-System routing, autoload, tags and events.
 * Modular parts are independent isolated product-oriented directories.
@@ -13,7 +13,7 @@ A simple modulith web framework
 * Autoload files inside directories with prefix `+`, recursively.
 * Events injection with files anywhere with prefix `!` and suffix `.php`.
 * Single-line tests with `.phpt` files anywhere, executed in `/+maxsim/tests`.
-* ~200 lines single-file framework kernel `+maxsim/maxsim.php`.
+* 200 lines single-file framework kernel `+maxsim/maxsim.php`.
 
 
 ### To know
@@ -38,8 +38,8 @@ A simple modulith web framework
 * File tags in `$maxsim['tags']` with prefix `#` or `@`.
 * Framework app url rewrite with: `$maxsim['redirect'] = '/url';`.
 * maxsim version exposed in: `/+maxsim/maxsim`.
-* `20k rps` Performance tested with: `ab -n 50000 -c 32 http://localhost:80/hello_world` (1 route, 1 template, Docker, PHP8, 6 cpu).
-* Simple, short, light, fast, modular, procedural first, snake_case, product-oriented, business-centric, dependency-free.
+* Performance tested with: `ab -n 50000 -c 32 http://localhost:80/hello_world` (1 route, 1 template, Docker, PHP8, 6 cpu).
+* Simple, short, light, fast, modular, procedural first, snake_case, product-oriented, business-centric.
 * MIT License.
 
 
@@ -52,7 +52,7 @@ A simple modulith web framework
 
 
 ### Tested environment
-* PHP from 7.4 to 8.3
+* PHP >=7.4
 * CentOS 7.8 x86_64
 * Alpine Linux docker
 * Apache (with mod_rewrite)
@@ -62,7 +62,7 @@ A simple modulith web framework
 ### Used in
 - **[POL](https://github.com/JavierGonzalez/POL)** A democratic social network.
 - **[BMP](https://github.com/JavierGonzalez/BMP)** A Bitcoin hashpower voting system.
-- More private projects.
+- Other private projects.
 
 
 \

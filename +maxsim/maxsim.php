@@ -24,12 +24,13 @@ SOFTWARE.
                                                                               */
 
 $maxsim = [
-    'version'  => '0.5.28',
+    'version'  => '0.5.25',
     'app'      => null,
     'app_dir'  => null,
     'app_url'  => null,
     'autoload' => [],
 ];
+
 
 chdir($_SERVER['DOCUMENT_ROOT']);
 register_shutdown_function('maxsim_event', 'maxsim_exit');
@@ -38,7 +39,7 @@ maxsim_router();
 ob_start();
 
 maxsim_event('maxsim_autoload');
-for ($maxsim_i = 0; $maxsim_i < count((array) $maxsim['autoload']); $maxsim_i++) {
+for ($maxsim_i = 0; $maxsim_i < count((array)$maxsim['autoload']); $maxsim_i++) {
     $maxsim_file = $maxsim['autoload'][$maxsim_i];
 
     if (substr($maxsim_file,-4) === '.php')
@@ -50,20 +51,13 @@ for ($maxsim_i = 0; $maxsim_i < count((array) $maxsim['autoload']); $maxsim_i++)
 }
 maxsim_event('maxsim_autoload_after');
 
-if ($maxsim['app_url'] === '/+maxsim/maxsim') {
-    if (isset($_GET[1]) AND $_GET[1] === 'cron' AND isset($_GET[2])) {
-        maxsim_event('maxsim_cron_'.$_GET[2]);
-        exit;
-    } else {
-        exit(json_encode(['maxsim_version' => $maxsim['version']], JSON_PRETTY_PRINT));
-    }
-}
 
 maxsim_event('maxsim_app');
 include($maxsim['app']);
 maxsim_event('maxsim_app_after');
 
-if (($maxsim['app'] === 'index.php' AND isset($_GET[1])) OR ob_get_length() === 0) {
+
+if (ob_get_length() === 0 OR ($maxsim['app'] === 'index.php' AND isset($_GET[1]))) {
     ob_end_clean();
 	http_response_code(404);
     if (maxsim_event('error_404') === [])
@@ -86,13 +80,6 @@ function maxsim_router() {
     global $maxsim;
 
     $levels = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
-
-    if (isset($maxsim['first_dir']) AND count($levels) !== 2 AND !is_dir($levels[1]) AND !is_file($levels[1].'.php')) {
-        $first_dir = $levels[1];
-        unset($levels[1]);
-        $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], (strlen($first_dir)+1));
-        $_GET[$maxsim['first_dir']] = $first_dir;
-    }
 
     $maxsim['autoload'] = [];
     foreach ($levels AS $id => $level) {
@@ -117,12 +104,10 @@ function maxsim_router() {
         $maxsim['app_url'] = '/'.str_replace(['/index','index'], '', substr($maxsim['app'],0,-4));
     }
 
-    maxsim_get();
+    if ($maxsim['app_url'] === '/+maxsim/maxsim')
+        exit(json_encode(['maxsim_version' => $maxsim['version']], JSON_PRETTY_PRINT));
 
-    if (isset($first_dir)) {
-        $_SERVER['REQUEST_URI'] = '/'.$first_dir.$_SERVER['REQUEST_URI'];
-        $maxsim['app_url']      = '/'.$first_dir.$maxsim['app_url'];
-    }
+    maxsim_get();
 }
 
 
@@ -130,7 +115,7 @@ function maxsim_autoload(array $ls, bool $autoload_files = false) {
     global $maxsim;
 
     foreach ($ls AS $file)
-        if (preg_match('/\.(php|js|css|ini)$/', basename($file)) === 1 AND basename($file) !== 'maxsim.php')
+        if (preg_match('/\.(php|js|css|ini)$/', basename($file)) AND basename($file) !== 'maxsim.php')
             if (!isset($maxsim['autoload']) OR !in_array($file, (array)$maxsim['autoload']))
                 if (substr(basename($file),0,1) !== '!')
                     if ($autoload_files === true OR substr(basename($file),0,1) === '+')
@@ -162,7 +147,7 @@ function maxsim_get() {
 
     $id = 0;
     foreach (array_filter(explode('/', $url)) AS $level => $value)
-        if (($level - $app_level) > 0)
+        if ($level-$app_level > 0)
             $_GET[$id++] = $value;
 }
 
@@ -197,7 +182,7 @@ function maxsim_event(string $name) {
     global $maxsim;
 
     if (!isset($maxsim['events'])) {
-        $maxsim['events'] = glob('{,*/,*/*/,*/*/*/}\!*.php', GLOB_BRACE); // 3 dir depth only.
+        $maxsim['events'] = glob('{,*/,*/*/,*/*/*/}\!*.php', GLOB_BRACE);
         sort($maxsim['events']);
     }
     
@@ -206,7 +191,7 @@ function maxsim_event(string $name) {
     
     $maxsim_event_output = [];
     foreach ($maxsim['events'] AS $file)
-        if (preg_match('/^\!'.$name.'(\.|-)/', basename($file)) === 1)
+        if (preg_match('/^\!'.$name.'(\.|-)/', basename($file)))
             if ($maxsim_event_output[] = $file)
                 include($file);
 

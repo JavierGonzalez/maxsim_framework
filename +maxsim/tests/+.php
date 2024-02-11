@@ -130,37 +130,23 @@ function test_print($text) {
 
 
 function test_url(string $url, string $mode = 'html') {
+
     if (strpos($url, '://') === false) {
         if (substr($url, 0, 1) !== '/')
             return false;
 
         if ($_SERVER['SERVER_ADDR'] === $_SERVER['SERVER_NAME'])
-            $url = 'http://localhost';
+            $host = 'localhost';
         else
-            $url = 'https://' . $_SERVER['HTTP_HOST'] . $url;
+            $host = $_SERVER['HTTP_HOST'];
+
+        $url = $_SERVER['REQUEST_SCHEME'].'://'.$host.$url;
     }
 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HEADER, true);
-    curl_setopt($ch, CURLOPT_NOBODY, $mode === 'status');
-
-    $response = curl_exec($ch);
-
-    if ($response === false) {
-        curl_close($ch);
-        return false;
-    }
-
-    $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-    $header = substr($response, 0, $header_size);
-    if ($mode === 'status') {
-        $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        return $status_code;
-    } else {
-        $body = substr($response, $header_size);
-        curl_close($ch);
-        return $body;
-    }
+    $html = file_get_contents($url);
+    
+    if ($mode === 'status')
+        return (int) trim(explode(' ', $http_response_header[0])[1]);
+    else
+        return $html;
 }

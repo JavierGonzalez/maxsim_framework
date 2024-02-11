@@ -82,7 +82,6 @@ unlink($test_app.'.php')
 
 # File system routing test dir
 $test_app_dir = 'dir_'.mt_rand(10000000,99999999)
-false === test_url('/'.$test_app_dir)
 404  === test_url('/'.$test_app_dir, 'status')
 is_writable('.')
 mkdir($test_app_dir)

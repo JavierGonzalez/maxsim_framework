@@ -36,6 +36,6 @@ hr {
     <tr><td><hr /></td></tr>
 
     <tr><td>
-        <a href="https://github.com/JavierGonzalez/maxsim">maxsim framework</a>
+        <a href="https://github.com/JavierGonzalez/maxsim_framework">maxsim framework</a>
     </td></tr>
 </table>

@@ -5,7 +5,6 @@ $template['title'] = 'maxsim';
 $template['head']  = '<link href="https://fonts.googleapis.com/css?family=Comfortaa"   rel="stylesheet">';
 $template['head'] .= '<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">';
 
-
 ?>
 <style>
 body {

@@ -4,3 +4,4 @@
 *.log
 lab/*
 .well-known/*
+.DS_Store

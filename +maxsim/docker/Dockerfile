@@ -1,9 +1,9 @@
-FROM php:8.1-apache
+FROM php:8.3-apache
 # https://github.com/docker-library/php
 
 RUN a2enmod rewrite
 
-RUN docker-php-ext-install mysqli gettext
+RUN docker-php-ext-install opcache mysqli gettext
 
 # RUN apt update 
 # RUN apt install sqlite3

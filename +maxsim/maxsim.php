@@ -24,7 +24,7 @@ SOFTWARE.
                                                                               */
 
 $maxsim = [
-    'version'  => '0.5.28',
+    'version'  => '0.5.29',
     'app'      => null,
     'app_dir'  => null,
     'app_url'  => null,

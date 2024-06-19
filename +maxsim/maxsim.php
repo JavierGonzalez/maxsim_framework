@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2005 Javier González González — javier.gonzalez@maxsim.tech
+Copyright (c) 2005 Javier González González <gonzo@virtualpol.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@ SOFTWARE.
                                                                               */
 
 $maxsim = [
-    'version'  => '0.5.29',
+    'version'  => '0.5.30',
     'app'      => null,
     'app_dir'  => null,
     'app_url'  => null,

@@ -19,7 +19,7 @@ A simple modulith web framework
 ### To know
 * Experimental, in development.
 * Minimum required: `.htaccess` and `+maxsim/maxsim.php`.
-* Docker deployment with: `docker-compose -f +maxsim/docker/docker-compose.yml up --build`.
+* Docker deployment with: `docker-compose -f docker-compose.yml up --build`.
 * Framework kernel info in array `$maxsim`.
 * Default HTML template output if `!template.php` exists.
 * Text-plain output with `exit;`.
@@ -62,9 +62,10 @@ A simple modulith web framework
 ### Used in
 - **[POL](https://github.com/JavierGonzalez/POL)** A democratic social network.
 - **[BMP](https://github.com/JavierGonzalez/BMP)** A Bitcoin hashpower voting system.
-- More private projects.
+- Others private projects.
 
 
 \
-Javier González González — <javier.gonzalez@maxsim.tech> \
-The maxsim Architect
+maxsim Architect
+Javier González González <gonzo@virtualpol.com> \
+A544 0B65 C998 9F6F 31A6 5020 DA34 5BEE 8E15 DEC6

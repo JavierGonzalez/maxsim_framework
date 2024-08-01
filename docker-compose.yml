@@ -4,5 +4,5 @@ web:
     - "80:80"
     - "443:443"
   volumes:
-    - ../..:/var/www/html
-    - ../log:/var/log/apache2
+    - .:/var/www/html
+    - +maxsim/log:/var/log/apache2

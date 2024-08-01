@@ -3,3 +3,5 @@
 *password*.env
 *.log
 lab/*
+.well-known/*
+.DS_Store

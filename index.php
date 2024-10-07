@@ -1,6 +1,6 @@
 <?php
 
-$template['title'] = 'maxsim';
+$template['title'] = 'maxsim framework';
 
 $template['head']  = '<link href="https://fonts.googleapis.com/css?family=Comfortaa"   rel="stylesheet">';
 $template['head'] .= '<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">';
@@ -35,6 +35,17 @@ hr {
     <tr><td><hr /></td></tr>
 
     <tr><td>
-        <a href="https://github.com/JavierGonzalez/maxsim_framework">maxsim framework</a>
+        <div>
+            <a href="https://github.com/JavierGonzalez/maxsim_framework">maxsim framework</a><br  />
+            <a href="https://github.com/JavierGonzalez/maxsim_framework/iftest">maxsim iftest</a>
+        </div>
     </td></tr>
 </table>
+
+
+<p style="font-size:14px;margin-top:150px;">
+The maxsim Architect <br />
+Javier González González &lt;gonzo@virtualpol.com&gt; <br />
+A544 0B65 C998 9F6F 31A6 5020 DA34 5BEE 8E15 DEC6<br />
+<br />
+Simplicity is the Maximum Sophistication</p>

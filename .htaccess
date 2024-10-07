@@ -8,7 +8,12 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule .* /+maxsim/maxsim.php [L]
 
-<FilesMatch "\.(php|phpt|log|ini|env|yml|md)$">
+<FilesMatch "\.(php|phpt|log|sh|ini|env|yml|md)$">
+ Order Allow,Deny
+ Deny from all
+</FilesMatch>
+
+<FilesMatch "(Dockerfile)$">
  Order Allow,Deny
  Deny from all
 </FilesMatch>

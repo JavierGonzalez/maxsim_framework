@@ -17,7 +17,7 @@ A simple modulith web framework
 
 
 ### To know
-* Experimental, in development.
+* In development.
 * Minimum required: `.htaccess` and `+maxsim/maxsim.php`.
 * Docker deployment with: `docker-compose -f docker-compose.yml up --build`.
 * Framework kernel info in array `$maxsim`.
@@ -66,6 +66,8 @@ A simple modulith web framework
 
 
 \
-maxsim Architect
-Javier González González <gonzo@virtualpol.com> \
-A544 0B65 C998 9F6F 31A6 5020 DA34 5BEE 8E15 DEC6
+The maxsim Architect \
+Javier González González &lt;gonzo@virtualpol.com&gt; \
+`A544 0B65 C998 9F6F 31A6 5020 DA34 5BEE 8E15 DEC6` \
+ \
+Simplicity is the Maximum Sophistication

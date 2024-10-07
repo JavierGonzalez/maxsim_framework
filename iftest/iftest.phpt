@@ -1,8 +1,13 @@
-<?
+<? // maxsim.tech — MIT License — Copyright (c) 2005 Javier González González <gonzo@virtualpol.com>
+
+// This test validates the integrity of the `iftest` test engine.
+
+# iftest
+true
 
 # PHP
 phpversion()
-7 <= explode('.', phpversion())[0]
+8 <= explode('.', phpversion())[0]
 
 
 # PHP var
@@ -41,13 +46,15 @@ array('abc','123') === ['abc', '123']
 array('abc','123') === ['abc', '12'] #pass_fail
 array(1 => 2) === [1 => 2]
 array(1 => 2) === [0 => 2, 1 => 2] #pass_fail
-
+[1,2,3] === [1,2,3]
 
 # Integers
 0 === 0
 1 === 1
 2 === 2
 -1 === -1
+1234 === 1_234
+1000000 === 1_000_000
 
 
 # Strings
@@ -93,7 +100,7 @@ array(1 => 2) === [0 => 2, 1 => 2] #pass_fail
 10 >= 11 #pass_fail
 
 
-# ms_limit
+# limit_ms
 null === usleep( 110) #limit_ms=1
 null === usleep(1100) #limit_ms=1 #pass_fail
 
@@ -118,3 +125,10 @@ strlen('') #pass_fail
 0 + 0 #pass_fail
 0 + 1
 mt_rand(1,9)
+
+
+
+
+
+
+

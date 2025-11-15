@@ -1,7 +1,4 @@
+*secrets*.php
 *password*.php
-*password*.ini
-*password*.env
-*.log
-lab/*
 .well-known/*
 .DS_Store

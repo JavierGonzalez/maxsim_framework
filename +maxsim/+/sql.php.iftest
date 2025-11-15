@@ -1,0 +1,10 @@
+<?
+
+exit;
+
+2 < sql("SELECT COUNT(*) AS num FROM users")[0]['num']
+
+
+sql("SELECT COUNT(*) FROM usersz")['error']
+sql("SELECTz COUNT(*) FROM users")['error']
+sql("a")['error']

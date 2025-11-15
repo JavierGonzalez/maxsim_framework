@@ -1,82 +1,52 @@
-<?php maxsim: /* SIMPLICITY IS THE MAXIMUM SOPHISTICATION *\
-
-MIT License
-
-Copyright (c) 2005 Javier González González <gonzo@virtualpol.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.                                                                  
-                                                                              */
+<?php maxsim_framework: # SIMPLICITY IS THE MAXIMUM SOPHISTICATION
 
 $maxsim = [
-    'version'  => '0.5.30',
-    'app'      => null,
-    'app_dir'  => null,
-    'app_url'  => null,
-    'autoload' => [],
+    'maxsim_framework' => '0.7.0',
+    'app'              => null,
+    'app_dir'          => null,
+    'app_url'          => null,
+    'autoload'         => [],
 ];
 
 chdir($_SERVER['DOCUMENT_ROOT']);
 register_shutdown_function('maxsim_event', 'maxsim_exit');
-maxsim_event('maxsim_router');
 maxsim_router();
 ob_start();
 
-maxsim_event('maxsim_autoload');
+maxsim_event('router');
+
+// autoload
 for ($maxsim_i = 0; $maxsim_i < count((array) $maxsim['autoload']); $maxsim_i++) {
     $maxsim_file = $maxsim['autoload'][$maxsim_i];
 
-    if (substr($maxsim_file,-4) === '.php')
+    if (str_ends_with($maxsim_file, '.php'))
         include_once($maxsim_file);
-
-    else if (substr($maxsim_file,-4) === '.ini')
-        if ($maxsim_key = ltrim(basename($maxsim_file, substr($maxsim_file,-4)), '+'))
-            define($maxsim_key, (array) parse_ini_file($maxsim_file, true, INI_SCANNER_TYPED));
 }
-maxsim_event('maxsim_autoload_after');
 
 if ($maxsim['app_url'] === '/+maxsim/maxsim') {
     if (isset($_GET[1]) AND $_GET[1] === 'cron' AND isset($_GET[2])) {
         maxsim_event('maxsim_cron_'.$_GET[2]);
         exit;
-    } else {
-        exit(json_encode(['maxsim_version' => $maxsim['version']], JSON_PRETTY_PRINT));
     }
 }
 
-maxsim_event('maxsim_app');
+maxsim_event('users');
+
+maxsim_event('header');
+
 include($maxsim['app']);
-maxsim_event('maxsim_app_after');
+
+maxsim_event('footer');
+
 
 if (($maxsim['app'] === 'index.php' AND isset($_GET[1])) OR ob_get_length() === 0) {
-    ob_end_clean();
-	http_response_code(404);
+    http_response_code(404);
     if (maxsim_event('error_404') === [])
         echo 'Error 404: NOT FOUND';
 }
 
-if (isset($maxsim['redirect'])) {
-    $_SERVER['REQUEST_URI'] = $maxsim['redirect'];
-    unset($maxsim['redirect']);
-    goto maxsim;
-}
-
-maxsim_event('template');
+if (isset($template['title']))
+    maxsim_event('template');
 
 exit;
 
@@ -117,7 +87,20 @@ function maxsim_router() {
         $maxsim['app_url'] = '/'.str_replace(['/index','index'], '', substr($maxsim['app'],0,-4));
     }
 
-    maxsim_get();
+
+    // get
+    $app_level = count(explode('/', $maxsim['app'])) - 1;
+    
+    $url = explode('?', $_SERVER['REQUEST_URI'])[0];
+    
+    if (substr($maxsim['app'],-9) === 'index.php')
+        $url = '/index'.$url;
+
+    $id = 0;
+    foreach (array_filter(explode('/', $url)) AS $level => $value)
+        if (($level - $app_level) > 0)
+            $_GET[$id++] = $value;
+
 
     if (isset($first_dir)) {
         $_SERVER['REQUEST_URI'] = '/'.$first_dir.$_SERVER['REQUEST_URI'];
@@ -150,28 +133,6 @@ function maxsim_autoload(array $ls, bool $autoload_files = false) {
 }
 
 
-function maxsim_get() {
-    global $_GET, $maxsim;
-
-    $app_level = count(explode('/', $maxsim['app'])) - 1;
-    
-    $url = explode('?', $_SERVER['REQUEST_URI'])[0];
-    
-    if (substr($maxsim['app'],-9) === 'index.php')
-        $url = '/index'.$url;
-
-    $id = 0;
-    foreach (array_filter(explode('/', $url)) AS $level => $value)
-        if (($level - $app_level) > 0)
-            $_GET[$id++] = $value;
-}
-
-
-function maxsim_dir(string $dir) {
-    return (string) substr(str_replace($_SERVER['DOCUMENT_ROOT'], '', $dir).'/', 1);
-}
-
-
 function maxsim_scandir(string $dir = '') {
     if ($dir !== '') {
         if (substr($dir, -1) !== '/')
@@ -194,7 +155,7 @@ function maxsim_scandir(string $dir = '') {
 
 
 function maxsim_event(string $name) {
-    global $maxsim;
+    global $maxsim, $template, $user;
 
     if (!isset($maxsim['events'])) {
         $maxsim['events'] = glob('{,*/,*/*/,*/*/*/}\!*.php', GLOB_BRACE); // 3 dir depth only.

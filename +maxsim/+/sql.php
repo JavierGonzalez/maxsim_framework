@@ -15,7 +15,6 @@ function e_identifier(string $user_input_identifier): string {
 }
 
 
-
 /** Execute an SQL query. $query must be sanitized to prevent SQL injection */
 function sql(string $query, array $params=[]): mixed {
     global $sql_db;
@@ -27,7 +26,6 @@ function sql(string $query, array $params=[]): mixed {
         $params['db'] = $sql_db['db'];
 
     $params['query'] = $query;
-    
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, 'http://maxsim/api/sql');   

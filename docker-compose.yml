@@ -2,7 +2,6 @@ web:
   build: .
   ports:
     - "80:80"
-    - "443:443"
   volumes:
     - .:/var/www/html
     - +maxsim/log:/var/log/apache2

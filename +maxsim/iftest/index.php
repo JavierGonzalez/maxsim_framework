@@ -1,9 +1,9 @@
-<?php # maxsim.tech — MIT License — Copyright (c) 2005 Javier González González <gonzo@virtualpol.com>
+<?php
 
 
 $test_fail_total_num = 0;
 
-$test_files_raw = glob('{*,*/*,*/*/*,*/*/*/*,*/*/*/*/*}.php.iftest', GLOB_BRACE);
+$test_files_raw = glob('{*,*/*,*/*/*,*/*/*/*,*/*/*/*/*}.iftest', GLOB_BRACE);
 
 foreach ($test_files_raw AS $test_file) {
     $name = explode('.', basename($test_file))[0];
@@ -30,17 +30,13 @@ echo '
 <style>
 .iftest-box-num { 
     display: inline-block;
-    margin:1px 0 1px 0;
+    margin: 0;
     width: 24px;
     height: 24px;
     color: white;
     text-align: center;
     vertical-align: middle;
     font-weight: bold; 
-}
-
-body, html {
-    overflow: hidden;
 }
 </style>
 
@@ -49,7 +45,7 @@ body, html {
 <table width="100%" border=0><tr><td valign=top align=left style="min-width:200px; padding:20px 10px 0 0;">
 
 
-<div class="box p-3">
+<div>
 
 <div class="iftest-box-num" style="font-size:20px;width:100%;height:75px;background-color:'.($test_fail_total_num===0?'blue':'red').';">
 <div style="position: relative; top: 50%; -webkit-transform: translateY(-50%); -ms-transform: translateY(-50%); transform: translateY(-50%);">
@@ -64,15 +60,16 @@ body, html {
 
 </td><td valign=top width="100%" style="padding:20px 10px 0 0;">';
 		
-if ($_GET['file'] ?? null)
-    echo '<div class="box p-3">
-        <iframe id="test-iframe" src="'.$maxsim['app_url'].'/exec?file='.urlencode($_GET['file']).'" frameborder="0" style="border:none; height:90vh; width:100%;">
+if ($_GET['file'] ?? null) {
+    echo '<div>
+        <iframe id="iftest-iframe" src="'.$maxsim['app_url'].'/exec?file='.urlencode($_GET['file']).'" frameborder="0" style="border:none; height:90vh; width:100%;">
             <script type="text/javascript">
-                document.getElementById("test-iframe").onload = function() {
+                document.getElementById("iftest-iframe").onload = function() {
                     alert("ok");
                 }
             </script>
         </iframe>
         </div>';
+}
 
 echo '</td></tr></table>';

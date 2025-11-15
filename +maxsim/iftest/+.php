@@ -1,14 +1,6 @@
 <?php # maxsim.tech — MIT License — Copyright (c) 2005 Javier González González <gonzo@virtualpol.com>
 
 
-ini_set("highlight.comment", "#008000");
-ini_set("highlight.default", "#000000");
-ini_set("highlight.html",    "#808080");
-ini_set("highlight.keyword", "#0000BB; font-weight: bold");
-ini_set("highlight.string",  "#b10000");
-
-
-
 function iftest_phpt(string $file, bool $print = false): bool {
     global $iftest_phpt_crono;
 

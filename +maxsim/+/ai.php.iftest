@@ -1,0 +1,4 @@
+<?
+
+$result = maxsim_ai_request(['prompt_user' => 'Hello!']);
+!empty($result['result'])

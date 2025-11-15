@@ -1,7 +1,7 @@
 <?
 
 // maxsim iftest
-// Execution in: /iftest
+// Execution in: /+maxsim/iftest
 
 
 # maxsim
@@ -9,7 +9,6 @@ is_readable('.')
 is_readable('+maxsim/maxsim.php')
 is_array($GLOBALS['maxsim'])
 basename($_SERVER['DOCUMENT_ROOT']) === basename(getcwd())
-extension_loaded('pdo_sqlite')
 
 # $_GET
 'exec' === $_GET[0]
@@ -72,7 +71,7 @@ $_SERVER['SERVER_NAME']
 
 
 # File system routing test file
-$test_app = 'maxsim_test_test_'.mt_rand(10000000,99999999)
+$test_app = '+maxsim/maxsim_test_test_'.mt_rand(10000000,99999999)
 404  === iftest_url('/'.$test_app, 'status')
 is_writable('.')
 file_put_contents($test_app.'.php', '<?php exit(\'ok\');')
@@ -86,7 +85,7 @@ unlink($test_app.'.php')
 
 
 # File system routing test dir
-$test_app_dir = 'maxsim_test_dir_'.mt_rand(10000000,99999999)
+$test_app_dir = '+maxsim/maxsim_test_dir_'.mt_rand(10000000,99999999)
 false === iftest_url('/'.$test_app_dir)
 404  === iftest_url('/'.$test_app_dir, 'status')
 is_writable('.')

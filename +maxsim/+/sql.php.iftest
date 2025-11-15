@@ -1,10 +1,9 @@
 <?
 
-exit;
 
-2 < sql("SELECT COUNT(*) AS num FROM users")[0]['num']
+0 < sql("SELECT COUNT(*) AS num FROM users")[0]['num']
 
-
-sql("SELECT COUNT(*) FROM usersz")['error']
-sql("SELECTz COUNT(*) FROM users")['error']
-sql("a")['error']
+# SQL errors
+is_string(sql("SELECT COUNT(*) FROM usersz"))
+is_string(sql("SELECTz COUNT(*) FROM users"))
+is_string(sql("a"))

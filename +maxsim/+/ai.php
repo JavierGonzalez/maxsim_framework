@@ -1,9 +1,7 @@
 <?php
 
-
 /** Make raw AI request */
 function maxsim_ai_request(array $input): array {
-
     /* Example:
     $input = [
         'prompt_system' => '',    
@@ -22,18 +20,18 @@ function maxsim_ai_request(array $input): array {
     $output = curl_exec($ch);
     
     return json_decode($output, true);
+    /* Example output:
+    Array
+    (
+        [model] => gpt-oss
+        [id_model] => 40
+        [inference_provider] => Cerebras
+        [seconds] => 0.596
+        [tps] => 86
+        [reasoning_effort] => medium
+        [input_tokens] => 69
+        [output_tokens] => 51
+        [result] => Hello!
+    )
+    */
 }
-/* Example output:
-Array
-(
-    [model] => gpt-oss
-    [id_model] => 40
-    [inference_provider] => Cerebras
-    [seconds] => 0.596
-    [tps] => 86
-    [reasoning_effort] => medium
-    [input_tokens] => 69
-    [output_tokens] => 51
-    [result] => Hello!
-)
-*/

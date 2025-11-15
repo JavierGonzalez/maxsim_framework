@@ -67,7 +67,7 @@ A simple modulith web framework
 
 \
 The maxsim Architect \
-Javier González González &lt;gonzo@virtualpol.com&gt; \
-`A544 0B65 C998 9F6F 31A6 5020 DA34 5BEE 8E15 DEC6` \
+Javier González &lt;gonzo@virtualpol.com&gt; \
+`A3AD 4AC5 F252 8190 65A5 75A0 B9C3 5FBF 43B3 19C2` \
  \
 Simplicity is the Maximum Sophistication

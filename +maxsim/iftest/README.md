@@ -2,7 +2,7 @@
 
 A simple and sophisticated inline code testing framework.
 
-<a href="https://github.com/JavierGonzalez/maxsim_framework/blob/master/iftest/iftest.php.iftest">Example</a>. \
+<a href="https://github.com/JavierGonzalez/maxsim_framework/tree/master/%2Bmaxsim/iftest">Example</a>. \
 <a href="https://maxsim.tech/+maxsim/iftest?file=%2Bmaxsim%2Fiftest%2Fiftest.php.iftest">Demo</a>.
 
 ### Key Features:
@@ -66,7 +66,7 @@ sleep(1) #limit_ms=50
 
 \
 The maxsim Architect \
-Javier González González &lt;gonzo@virtualpol.com&gt; \
+Javier González &lt;gonzo@virtualpol.com&gt; \
 `A3AD 4AC5 F252 8190 65A5 75A0 B9C3 5FBF 43B3 19C2` \
  \
 Simplicity is the Maximum Sophistication

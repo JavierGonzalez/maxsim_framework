@@ -37,7 +37,7 @@ hr {
     <tr><td>
         <div>
             <a href="https://github.com/JavierGonzalez/maxsim_framework">maxsim framework</a><br  />
-            <a href="https://github.com/JavierGonzalez/maxsim_framework/tree/master/iftest">maxsim iftest</a>
+            <a href="https://github.com/JavierGonzalez/maxsim_framework/tree/master/%2Bmaxsim/iftest">maxsim iftest</a>
         </div>
     </td></tr>
 </table>

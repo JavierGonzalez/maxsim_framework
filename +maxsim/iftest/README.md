@@ -2,7 +2,7 @@
 
 A simple and sophisticated inline code testing framework.
 
-<a href="https://github.com/JavierGonzalez/maxsim_framework/tree/master/%2Bmaxsim/iftest">Example</a>. \
+<a href="https://github.com/JavierGonzalez/maxsim_framework/blob/master/%2Bmaxsim/iftest/iftest.php.iftest">Example</a>. \
 <a href="https://maxsim.tech/+maxsim/iftest?file=%2Bmaxsim%2Fiftest%2Fiftest.php.iftest">Demo</a>.
 
 ### Key Features:
